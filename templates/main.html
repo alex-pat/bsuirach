@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BSUIRach</title>
+    </head>
+    <body>
+        <div class="top-bar">
+            <section class="top-bar-section">
+                <ul class="right">
+                  {% if username %}
+                    <li><a href="/auth/logout/">Logout ({{ username }})</a></li>
+                  {% else %}
+                    <li><a href="/auth/login/">Login</a></li>
+                  {% endif %}
+                </ul>
+            </section>
+        </div>
+        <div class="row">
+            {% block login %}{% endblock %}
+            {% block body %}{% endblock %}
+
+        </div>
+    </body>
+</html>
