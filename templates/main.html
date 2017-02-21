@@ -5,6 +5,7 @@
         <title>BSUIRach</title>
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" media="screen" />
         <link rel="stylesheet" href="{% static 'common.css' %}" type="text/css" media="screen" />
+        <script src="{% static 'jquery.min.js' %}"></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     </head>
     <body>
@@ -32,6 +33,7 @@
                         <li><a href="/auth/logout/">Logout</a></li>
                        {% else %}
                         <li><a href="/auth/login/">Login</a></li>
+                        <li><a href="/auth/register/">Sign up</a></li>
                        {% endif %}
 
                     </ul>
