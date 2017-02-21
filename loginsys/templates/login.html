@@ -2,20 +2,33 @@
 
 {% block body %}
 
-<div>
-    <form method="post" action="/auth/login/">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        {% if login_error %}
-        <label class="error">{{ login_error }}</label>
+<div class="container">
+  <div class="col-xs-offset-4 col-xs-4">
+    <div class="well" align="center">
+      <fieldset>
+        <legend>Login</legend>
+        <form method="post" action="/auth/login/">
+             {% csrf_token %}
+             {% if login_error %}
+            <div class="alert alert-danger">{{ login_error }}</div>
         {% endif %}
-        <input class="button" type="submit" value="Войти">
-        <div class="label round secondary"><a href="/auth/register/">Registration</a></div>
-    </form>
-</div>
+            <div class="form-group">
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username">
+            </div>
 
+            <div class="form-group">
+                <input type="password" name="password" id="password" class='form-control' placeholder="Password">
+            </div>
+            <div class="actions">
+                <input class="btn btn-default" type="submit" value="OK">
+                <br />
+                <div class="label round secondary"><a href="/auth/register/">Registration</a></div>
+
+            </div>
+        <br/>
+      </fieldset>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
