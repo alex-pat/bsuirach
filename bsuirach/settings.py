@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'registration',
     'home',
     'loginsys',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -133,4 +134,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
 
-# APPEND_SLASH=False
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "users/static"),
+]

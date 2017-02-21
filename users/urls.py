@@ -1,8 +1,8 @@
 from django.conf.urls import include, url
 from . import views
 
-app_name = 'home'
+app_name = 'users'
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^(?P<username>\w+)/$', views.show, name='show'),
 ]

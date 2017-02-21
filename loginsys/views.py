@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
-
 from django.template.context_processors import csrf
+
 
 def login(request):
     args = {}
@@ -25,6 +25,7 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
 
 def register(request):
     args = {}

@@ -3,23 +3,57 @@
 <html>
     <head>
         <title>BSUIRach</title>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{% static 'common.css' %}" type="text/css" media="screen" />
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     </head>
     <body>
-        <div class="top-bar">
-            <section class="top-bar-section">
-                <ul class="right">
-                  {% if username %}
-                    <li><a href="/auth/logout/">Logout ({{ username }})</a></li>
-                  {% else %}
-                    <li><a href="/auth/login/">Login</a></li>
-                  {% endif %}
-                </ul>
-            </section>
-        </div>
-        <div class="row">
-            {% block login %}{% endblock %}
-            {% block body %}{% endblock %}
 
+
+        <nav class="navbar navbar-default navbar-fixed-top"">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">BSUIRach</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <!-- <li><a href="#">Link</a></li> -->
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                       {% if username %}
+                        <li><a href="/users/{{ username }}">{{ username }}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/auth/logout/">Logout</a></li>
+                       {% else %}
+                        <li><a href="/auth/login/">Login</a></li>
+                       {% endif %}
+
+                    </ul>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="wrap">
+            <div class="container">
+            {% block body %}{% endblock %}
+            </div>
+            <div id="push"></div>
         </div>
+
+        <div class="container">
+            <p class="muted credit" style='text-align:center'>
+                <a href="http://github.com/alex-pat/bsuirach">
+                    6TPO (The Specks), 2017. Fork Us on github
+                </a>
+            </p>
+        </div>
+
     </body>
 </html>
