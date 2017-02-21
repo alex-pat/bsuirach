@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-white profile-widget">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="image-container bg2" style='background-image:url("{% static 'wallpaper.jpeg' %}")'>
+                            <img src="{% static 'default_avatar.png' %}" class="avatar" alt="avatar">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="details">
+                            <h4>{{ user.first_name }} {{ user.last_name }}<i class="fa fa-sheild"></i></h4>
+                            <div>{{ user.username }}</div>
+                            <div>{{ user.email }}</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-6 col-sm-offset-3">
+                    <form method="POST" action="/users/{{ username }}/update">
+                        {% csrf_token %}
+                        <div class="panel panel-white border-top-purple">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Edit info</h3>
+                                <div class="controls pull-right">
+                                    <span class="pull-right clickable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="body-section">
+                                    <h5 class="section-heading">Username</h5>
+                                    <p class="section-content">
+                                        <input type="text" name="username" value="{{ user.username }}" class='form-control'/>
+                                    </p>
+                                </div>
+                                <div class="body-section">
+                                    <h5 class="section-heading">First name</h5>
+                                    <p class="section-content">
+                                        <input type="text" name="first_name" value="{{ user.first_name }}" class='form-control'/>
+                                    </p>
+                                </div>
+                                <div class="body-section">
+                                    <h5 class="section-heading">Last name</h5>
+                                    <p class="section-content">
+                                        <input type="text" name="last_name" value="{{ user.last_name }}" class='form-control'/>
+                                    </p>
+                                </div>
+                                <div class="body-section">
+                                    <h5 class="section-heading">Email</h5>
+                                    <p class="section-content">
+                                        <input type="text" name="email" value="{{ user.email }}" class='form-control'/>
+                                    </p>
+                                </div>
+                                <input type="submit" class='btn btn-primary'>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -14,9 +14,8 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="details">
-                            <h4>{{ user.username }} <i class="fa fa-sheild"></i></h4>
-                            <div>{{ user.first_name }}</div>
-                            <div>{{ user.last_name }}</div>
+                            <h4>{{ user.first_name }} {{ user.last_name }}<i class="fa fa-sheild"></i></h4>
+                            <div>{{ user.username }}</div>
                             <div>{{ user.email }}</div>
                         </div>
                     </div>
@@ -140,6 +139,9 @@
                             <div class="body-section">
                                 <h5 class="section-heading">Last login</h5>
                                 <p class="section-content">{{ user.last_login.isoformat }}</p>
+                            </div>
+                            <div class="body-section">
+                                <a href='/users/{{ user.username }}/edit' class='btn btn-default'>Edit</a>
                             </div>
                         </div>
                     </div>
