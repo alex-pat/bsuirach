@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 
 def show(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'show.html', {'user': user, 'username': request.user})
+    return render(request, 'users/show.html', {'user': user, 'username': request.user})
 
 
 def edit(request, username):
     user = request.user
     if username != user.username:
         return redirect("/")
-    return render(request, 'edit.html', {'user': user, 'username': username})
+    return render(request, 'users/edit.html', {'user': user, 'username': username})
 
 def update(request, username):
     user = request.user

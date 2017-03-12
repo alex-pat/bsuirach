@@ -7,4 +7,4 @@ from employees.models import Employee
 
 def index(request):
     employees = Employee.objects.all()
-    return render_to_response('index.html', {'employees': employees, 'username': auth.get_user(request).username})
+    return render_to_response('home/index.html', {'employees': employees, 'username': auth.get_user(request).username})
