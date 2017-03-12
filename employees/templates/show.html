@@ -10,7 +10,13 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-12 col-sm-3 text-center">
-              <img src="{{ employee.photoLink }}" alt="{{ employee.lastName }}" class="center-block img-circle img-thumbnail img-responsive">
+                <img
+                    {% if employee.photoLink %}
+                       src="{{ employee.photoLink }}"
+                    {% else %}
+                       src="{% static 'default_avatar.png' %}"
+                    {% endif %}
+                    alt="{{ employee.lastName }}" class="center-block img-circle img-thumbnail img-responsive">
             </div>
             <div class="col-xs-12 col-sm-8">
                 <h2>{{ employee.lastName }}
