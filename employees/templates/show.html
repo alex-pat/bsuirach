@@ -3,16 +3,29 @@
 
 {% block body %}
 
-<ul>
-    <li>id: {{ employee.id }} </li>
-    <li>academicDepartment: {{ employee.academicDepartment }} </li>
-    <li>calendarId: {{ employee.calendarId }} </li>
-    <li>firstName: {{ employee.firstName }} </li>
-    <li>bsuir_id: {{ employee.bsuir_id }} </li>
-    <li>lastName: {{ employee.lastName }} </li>
-    <li>middleName: {{ employee.middleName }} </li>
-    <li>photoLink: {{ employee.photoLink }} </li>
-    <li>description: {{ employee.description }} </li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8 col-xs-10">
+      <div class="well panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-3 text-center">
+              <img src="{{ employee.photoLink }}" alt="{{ employee.lastName }}" class="center-block img-circle img-thumbnail img-responsive">
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <h2>{{ employee.lastName }}
+                    {{ employee.firstName }}
+                    {{ employee.middleName }}</h2>
+                <h5><strong><a href='https://www.bsuir.by/schedule/scheduleEmployee.xhtml?id={{ employee.bsuir_id }}'>Расписание</a></strong></h5>
+                <h5><strong>Кафедра: </strong> {{ employee.academicDepartment }} </h5>
+                <h5><strong>Разведка докладывает: </strong> {{ employee.description }} </h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
