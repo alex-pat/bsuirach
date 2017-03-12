@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+
+<ul>
+    <li>id: {{ employee.id }} </li>
+    <li>academicDepartment: {{ employee.academicDepartment }} </li>
+    <li>calendarId: {{ employee.calendarId }} </li>
+    <li>firstName: {{ employee.firstName }} </li>
+    <li>bsuir_id: {{ employee.bsuir_id }} </li>
+    <li>lastName: {{ employee.lastName }} </li>
+    <li>middleName: {{ employee.middleName }} </li>
+    <li>photoLink: {{ employee.photoLink }} </li>
+    <li>description: {{ employee.description }} </li>
+</ul>
+
+{% endblock %}

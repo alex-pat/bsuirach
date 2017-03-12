@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'loginsys',
     'users',
+    'employees',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,7 @@ TEMPLATES = [
             'templates',
             'home/templates',
             'loginsys/templates',
+            'employees/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
