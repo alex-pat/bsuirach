@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load comments %}
 
 {% block body %}
 
@@ -30,6 +31,29 @@
           </div>
         </div>
       </div>
+      <p>
+          {% get_comment_count for employee as comment_count %}
+          <strong>{{ comment_count }} comments :<strong>
+      </p>
+          {% render_comment_list for employee %}
+      <br />
+
+          {% if user.is_authenticated %}
+             {% get_comment_form for employee as form %}
+          <form action="{% comment_form_target %}" method="POST">
+             {% csrf_token %}
+              <textarea class="form-control" id="id_comment" maxlength="3000" name="comment" required></textarea>
+              <input type="hidden" id="id_honeypot" name="honeypot" type="text" />
+             {{ form.content_type }}
+             {{ form.object_pk }}
+             {{ form.timestamp }}
+             {{ form.security_hash }}
+              <input type="hidden" name="next" value="{% url 'employees:show' employee.id %}" />
+              <input type="submit" class='btn btn-default' value="Add comment" id="id_submit" />
+          </form>
+          {% else %}
+          <p>Please <a href="{% url 'loginsys:login' %}">log in</a> to leave a comment.</p>
+          {% endif %}
     </div>
   </div>
 </div>

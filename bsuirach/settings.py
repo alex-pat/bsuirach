@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'loginsys',
     'users',
     'employees',
+    'django_comments',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 

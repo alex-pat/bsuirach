@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^auth/', include('loginsys.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^employees/', include('employees.urls')),
+    url(r'^comments/', include('django_comments.urls')),
     url(r'^', include('home.urls')),
 ]
