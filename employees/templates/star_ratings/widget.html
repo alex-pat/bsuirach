@@ -1,0 +1,20 @@
+{% extends "star_ratings/widget_base.html" %}
+{% block rating_detail %}
+
+({{ rating.average|floatformat:"-2" }} баллаў)
+
+<p><strong>{{ rating.count }} людей проголосовало
+
+    {% if user_rating %}
+        (ты поставил {{ user_rating.score }})
+    {% else %}
+        (ты не ставил)
+    {% endif %}
+    {% if not user.is_authenticated and not anonymous_ratings and not read_only %}
+</strong>
+        <p>Залогинься, чтоб проголосовать</p>
+    {% endif %}
+
+</p>
+    <div class="star-ratings-errors"></div>
+{% endblock %}
