@@ -1,8 +1,12 @@
 {% extends 'main.html' %}
 {% load static %}
 {% load comments %}
+{% load ratings %}
 
 {% block body %}
+
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 
 <div class="container">
   <div class="row">
@@ -32,6 +36,7 @@
         </div>
       </div>
       <div class='col-xs-offset-2 col-xs-8'>
+          <p>{% ratings employee %}</p>
       <p>
           {% get_comment_count for employee as comment_count %}
           <strong>{{ comment_count }} comments<strong>

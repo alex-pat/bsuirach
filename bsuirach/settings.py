@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'employees',
     'django_comments',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +139,10 @@ STATIC_URL = '/static/'
 SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
+
+STAR_RATINGS_RERATE = False
+
+STAR_RATINGS_RANGE = 10
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
