@@ -31,12 +31,30 @@
           </div>
         </div>
       </div>
+      <div class='col-xs-offset-2 col-xs-8'>
       <p>
           {% get_comment_count for employee as comment_count %}
-          <strong>{{ comment_count }} comments :<strong>
+          <strong>{{ comment_count }} comments<strong>
       </p>
-          {% render_comment_list for employee %}
-      <br />
+      {% get_comment_list for employee as comment_list %}
+      <ul class="media-list">
+          {% for comment in comment_list %}
+          <li class="media">
+              <a href="#" class="pull-left">
+                  <img src="{% static 'default_avatar.png' %}" alt="" class="img-circle" height="65" width="65">
+              </a>
+              <div class="media-body">
+                  <span class="text-muted pull-right">
+                      <small class="text-muted">{{ comment.submit_date }}</small>
+                  </span>
+                  <strong class="text-success">{{ comment.user_name }}</strong>
+                  <p>
+                      {{ comment.comment }}
+                  </p>
+              </div>
+          </li>
+          {% endfor %}
+      </ul>
 
           {% if user.is_authenticated %}
              {% get_comment_form for employee as form %}
@@ -54,6 +72,7 @@
           {% else %}
           <p>Please <a href="{% url 'loginsys:login' %}">log in</a> to leave a comment.</p>
           {% endif %}
+      </div>
     </div>
   </div>
 </div>
