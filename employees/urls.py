@@ -5,4 +5,5 @@ app_name = 'employees'
 
 urlpatterns = [
     url(r'^(?P<employee_id>[0-9]+)/$', views.show, name='show'),
+    url(r'^update/$', views.update, name='update'),
 ]
