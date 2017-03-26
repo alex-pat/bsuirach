@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block body %}
+
 <div class="container">
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
@@ -23,7 +24,9 @@
                 </div>
             </div>
         {% if user.is_superuser %}
-            <a href="{% url 'employees:update' %}">Update employees</a>
+            <div id="employee-updater">
+                <a href="#">Update employees</a>
+            </div>
         {% endif %}
             <div class="row">
 
@@ -172,12 +175,22 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
+        <script type="text/javascript">
+         $("#employee-updater").on('click', function(event) {
+             $.get({
+                 url: "{% url 'employees:update' %}",
+                 beforeSend: function() {
+                     $("#employee-updater").text("Wait...");
+                 },
+                 success: function(response) {
+                     $("#employee-updater").text(response);
+                 }
+             });
+         });
+        </script>
 
 {% endblock %}

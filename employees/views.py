@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponse
 from .models import Employee
 from .bsuirapi import get_employees
 
@@ -22,4 +23,4 @@ def update(request):
         employee.photoLink = empl['photoLink']
         employee.description = empl['rank']
         employee.save()
-    return redirect('/')
+    return HttpResponse("Success")
