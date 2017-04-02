@@ -1,5 +1,5 @@
 from django.db import models
-
+from images.models import Image
 
 class Employee(models.Model):
     academicDepartment = models.CharField(max_length=100)
@@ -10,3 +10,11 @@ class Employee(models.Model):
     middleName = models.CharField(max_length=100)
     photoLink = models.URLField(max_length=250)
     description = models.TextField()
+    images = models.ManyToManyField(Image)
+
+    def __str__(self):
+        return "Employee {}: {} {}".format(
+            self.pk,
+            self.firstName,
+            self.lastName
+        )

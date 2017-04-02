@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'employees',
     'django_comments',
     'star_ratings',
+    'cloudinary',
+    'images',
 ]
 
 MIDDLEWARE = [

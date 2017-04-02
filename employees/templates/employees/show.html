@@ -2,6 +2,7 @@
 {% load static %}
 {% load comments %}
 {% load ratings %}
+{% load cloudinary %}
 
 {% block body %}
 
@@ -61,6 +62,31 @@
           {% endfor %}
       </ul>
 
+    {% if employee.images %}
+      <ul>
+            {% for image in employee.images.all %}
+          <li>
+                {% cloudinary image.image width=100 %}
+          </li>
+            {% endfor %}
+      </ul>
+    {% else %}
+      <p>No images are available. </p>
+    {% endif %}
+
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'images:create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="employee_id" value="{{ employee.id }}" />
+
+        {{ image_form }}
+
+        <input type="submit" value="Submit" />
+
+    </form>
+
+
           {% if user.is_authenticated %}
              {% get_comment_form for employee as form %}
           <form action="{% comment_form_target %}" method="POST">
@@ -81,5 +107,6 @@
     </div>
   </div>
 </div>
+
 
 {% endblock %}

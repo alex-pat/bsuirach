@@ -1,13 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
+from images.forms import ImageForm
 from .models import Employee
 from .bsuirapi import get_employees
 
 
 def show(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
-    return render(request, 'employees/show.html', {'employee': employee, 'username': request.user.username})
+    form = ImageForm()
+    context =  {
+        'employee': employee,
+        'username': request.user.username,
+        'image_form': form
+    }
+    return render(request, 'employees/show.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)

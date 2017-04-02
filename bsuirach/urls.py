@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^employees/', include('employees.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    url(r'^images/', include('images.urls')),
     url(r'^', include('home.urls')),
 ]
