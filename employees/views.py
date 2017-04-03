@@ -31,3 +31,9 @@ def update(request):
         employee.description = empl['rank']
         employee.save()
     return HttpResponse("Success")
+
+def add_tags(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    employee.tags.add(*request.GET['tags'].split())
+    employee.save()
+    return redirect('/employees/{}/'.format(employee_id))

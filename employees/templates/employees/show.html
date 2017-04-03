@@ -36,6 +36,9 @@
           </div>
         </div>
       </div>
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  +
+</button>
       <div class='col-xs-offset-2 col-xs-8'>
           <p>{% ratings employee %}</p>
       <p>
@@ -74,17 +77,12 @@
       <p>No images are available. </p>
     {% endif %}
 
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    <form action="{% url 'images:create' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="employee_id" value="{{ employee.id }}" />
-
-        {{ image_form }}
-
-        <input type="submit" value="Submit" />
-
-    </form>
+    <p>Tags:
+    {% for tag in employee.tags.all %}
+      {{ tag }}
+    {% endfor %}
+</p>
 
 
           {% if user.is_authenticated %}
@@ -108,5 +106,38 @@
   </div>
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New images/tags</h4>
+      </div>
+      <div class="modal-body">
 
+          <form action="{% url 'employees:tags_add' employee_id=employee.id %}" method="GET">
+        {% csrf_token %}
+
+              <label>Add tags:</label>
+
+              <input type="text" class="from-control" name="tags" />
+
+              <input type="submit" value="Submit" />
+          </form>
+
+
+       {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+          <form action="{% url 'images:create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+              <input type="hidden" name="employee_id" value="{{ employee.id }}" />
+
+        {{ image_form }}
+
+              <input type="submit" value="Submit" />
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

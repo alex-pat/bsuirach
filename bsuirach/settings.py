@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'star_ratings',
     'cloudinary',
     'images',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "users/static"),
 ]
+
+TAGGIT_CASE_INSENSITIVE = True
