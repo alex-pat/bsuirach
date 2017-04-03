@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'loginsys',
     'users',
+    'groups',
     'employees',
     'django_comments',
     'star_ratings',
