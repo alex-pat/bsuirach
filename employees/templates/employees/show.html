@@ -39,15 +39,67 @@
       </div>
 
     {% if employee.images.all %}
-          <ul>
+      <div class="row pictures">
             {% for image in employee.images.all %}
-              <li>
-                {% cloudinary image.image width=100 %}
-              </li>
-            {% endfor %}
-          </ul>
+
+          <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                  <div class="caption">
+                      <p class="pull-right" rel="tooltip">
+                      </p>
+                      <div class="clearfix"></div>
+                  </div>
+                  <img src="{{ image.image.url }}" alt="One second..."
+                       class="img-responsive"   data-toggle="modal" data-target="#pictureModal" />
+
+              </div>
+          </div>
+           {% endfor %}
+      </div>
+
+      <style type="text/css" media="screen">
+          .pictures .thumbnail {
+              position: relative;
+
+
+              webkit-transition: all .3s cubic-bezier(.55,.08,.06,.97);
+              transition: all .3s cubic-bezier(.55,.08,.06,.97);
+              vertical-align: middle;
+              -webkit-filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .27));
+              filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .27));
+          }
+
+          .pictures .thumbnail:hover {
+              cursor: pointer;
+              -webkit-transform: translate3d(0,-5px,0);
+              transform: translate3d(0,-5px,0);
+              -webkit-filter: drop-shadow(0 21px 16px rgba(0, 0, 0, .18));
+              filter: drop-shadow(0 21px 16px rgba(0, 0, 0, .18));
+          }
+
+          .pictures .caption {
+              bottom: calc(100% - 60px);
+              left: calc(100% - 60px);
+              position: absolute;
+          }
+
+          #pictureModal img {
+              margin-left: auto;
+              margin-right: auto;
+          }
+      </style>
+
+      <script type="text/javascript">
+       $("div.pictures div div img").click(function (event) {
+        var modal_body = $("#pictureModal div div div.modal-body");
+           modal_body.empty();
+           var picture = $(event.target).clone();
+           modal_body.append(picture);
+       });
+      </script>
+
     {% else %}
-          <p>No images are available. </p>
+      <p>No images are available. </p>
     {% endif %}
 
       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
@@ -190,4 +242,16 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="pictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img class="img-responsive" alt="One second...">
+        </div>
+      </div>
+    </div>
+</div>
+
 {% endblock %}
