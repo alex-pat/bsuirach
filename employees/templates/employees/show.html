@@ -8,7 +8,8 @@
 
 <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'jqcloud/jqcloud-1.0.4.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'jqcloud/jqcloud.css' %}">
 <div class="container">
   <div class="row">
     <div class="col-md-offset-2 col-md-8 col-xs-10">
@@ -36,53 +37,76 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  +
-</button>
-      <div class='col-xs-offset-2 col-xs-8'>
-          <p>{% ratings employee %}</p>
-      <p>
-          {% get_comment_count for employee as comment_count %}
-          <strong>{{ comment_count }} comments<strong>
-      </p>
-      {% get_comment_list for employee as comment_list %}
-      <ul class="media-list">
-          {% for comment in comment_list %}
-          <li class="media">
-              <a href="#" class="pull-left">
-                  <img src="{% static 'default_avatar.png' %}" alt="" class="img-circle" height="65" width="65">
-              </a>
-              <div class="media-body">
-                  <span class="text-muted pull-right">
-                      <small class="text-muted">{{ comment.submit_date }}</small>
-                  </span>
-                  <strong class="text-success">{{ comment.user_name }}</strong>
-                  <p>
-                      {{ comment.comment }}
-                  </p>
-              </div>
-          </li>
-          {% endfor %}
-      </ul>
 
-    {% if employee.images %}
-      <ul>
+    {% if employee.images.all %}
+          <ul>
             {% for image in employee.images.all %}
-          <li>
+              <li>
                 {% cloudinary image.image width=100 %}
-          </li>
+              </li>
             {% endfor %}
-      </ul>
+          </ul>
     {% else %}
-      <p>No images are available. </p>
+          <p>No images are available. </p>
     {% endif %}
 
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+  +
+      </button>
+          <hr/>
+      <div class='col-xs-offset-2 col-xs-8'>
 
-    <p>Tags:
-    {% for tag in employee.tags.all %}
-      {{ tag }}
-    {% endfor %}
-</p>
+        {% if employee.memes %}
+          Memes:
+          <div id='memes-cloud' style="width: 550px; height: 150px;"></div>
+
+          <script type="text/javascript">
+           $("#memes-cloud").jQCloud([
+              {% for meme in employee.memes %}
+                 {text: '{{ meme }}' },
+              {% endfor %}
+           ]);
+          </script>
+        {% else %}
+          <p>No memes :(</p>
+        {% endif %}
+          <hr/>
+        {% if employee.tags.exists %}
+          <p>Tags:
+            {% for tag in employee.tags.all %}
+              {{ tag }}
+            {% endfor %}
+          </p>
+        {% else %}
+          <p>No tags here</p>
+        {% endif %}
+
+
+
+          <p>{% ratings employee %}</p>
+          <p>
+          {% get_comment_count for employee as comment_count %}
+              <strong>{{ comment_count }} comments<strong>
+          </p>
+      {% get_comment_list for employee as comment_list %}
+          <ul class="media-list">
+          {% for comment in comment_list %}
+              <li class="media">
+                  <a href="#" class="pull-left">
+                      <img src="{% static 'default_avatar.png' %}" alt="" class="img-circle" height="65" width="65">
+                  </a>
+                  <div class="media-body">
+                      <span class="text-muted pull-right">
+                          <small class="text-muted">{{ comment.submit_date }}</small>
+                      </span>
+                      <strong class="text-success">{{ comment.user_name }}</strong>
+                      <p>
+                      {{ comment.comment }}
+                      </p>
+                  </div>
+              </li>
+          {% endfor %}
+          </ul>
 
 
           {% if user.is_authenticated %}
@@ -111,7 +135,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">New images/tags</h4>
+        <h4 class="modal-title" id="myModalLabel">New info</h4>
       </div>
       <div class="modal-body">
 
@@ -125,7 +149,7 @@
               <input type="submit" value="Submit" />
           </form>
 
-
+          <hr/>
        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
           <form action="{% url 'images:create' %}" method="POST" enctype="multipart/form-data">
@@ -136,6 +160,19 @@
 
               <input type="submit" value="Submit" />
           </form>
+
+          <hr/>
+
+          <form action="{% url 'employees:meme_add' employee_id=employee.id %}" method="GET">
+        {% csrf_token %}
+
+              <label>Add meme:</label>
+
+              <input type="text" class="from-control" name="meme" />
+
+              <input type="submit" value="Submit" />
+          </form>
+
       </div>
     </div>
   </div>

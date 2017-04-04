@@ -14,6 +14,17 @@ class Employee(models.Model):
     images = models.ManyToManyField(Image)
     tags = TaggableManager()
 
+    _memes = models.TextField(blank=True)
+
+    @property
+    def memes(self):
+        memes = self._memes.split('\n')
+        return list(filter(bool, memes))
+
+    @memes.setter
+    def memes(self, value):
+        self._memes = '\n'.join(filter(lambda x: x.strip(), value))
+
     def __str__(self):
         return "Employee {}: {} {}".format(
             self.pk,

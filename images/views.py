@@ -11,11 +11,12 @@ cloudinary.config(
 
 def create(request):
     form = ImageForm(request.POST, request.FILES)
+    employee_id = request.POST['employee_id']
     if form.is_valid():
         image = form.save()
-        employee = get_object_or_404(Employee, pk=request.POST['employee_id'])
+        employee = get_object_or_404(Employee, pk=employee_id)
         employee.images.add(image)
         employee.save()
-        return redirect('/')
+        return redirect('/employees/{}/'.format(employee_id))
 
-    return redirect('/')
+    return redirect('/employees/{}/'.format(employee_id))
