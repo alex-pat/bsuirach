@@ -74,9 +74,22 @@
         {% if employee.tags.exists %}
           <p>Tags:
             {% for tag in employee.tags.all %}
-              {{ tag }}
+              <div class='tag'> {{ tag }} </div>
             {% endfor %}
           </p>
+          <style type="text/css" media="screen">
+              .tag {
+                  border-radius: 16px;
+                  padding: 3px 6px;
+                  font-size: 13px;
+                  line-height: 27px;
+                  display: inline-block;
+                  height: 25px;
+                  color: rgba(0,0,0,0.6);
+                  padding: 0 12px;
+                  background-color: #E4E4E4;
+              }
+          </style>
         {% else %}
           <p>No tags here</p>
         {% endif %}
