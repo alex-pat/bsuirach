@@ -18,6 +18,9 @@
                             <h4>{{ user.first_name }} {{ user.last_name }}<i class="fa fa-sheild"></i></h4>
                             <div>{{ user.username }}</div>
                             <div>{{ user.email }}</div>
+                            {% for group in user.group_set.all %}
+                            <div>{{ group.number }}</div>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -64,14 +67,10 @@
                         </div>
                         <div class="panel-body">
                             <div class="body-section">
-                                <h5 class="section-heading">Current Plan: Basic Plan</h5>
-                                <ul>
-                                    <li>ЛР: 512-5 ТРиТПО (Яночкин)</li>
-                                    <li>ЛР: 501-5 ЦОСиИ (Третьяков)</li>
-                                    <li>ЛР: 512-5 ТРиТПО (Яночкин)</li>
-                                    <li>ЛР: 207-5 АКСиС (Калинин)</li>
-                                    <li>ЛР: 502-5 СА (Иванов)</li>
-                                </ul>
+                                <h5 class="section-heading">Today:</h5>
+                                {% autoescape off %}
+                                {{ schedule }}
+                                {% endautoescape %}
                             </div>
                         </div>
                     </div>
@@ -172,7 +171,7 @@
                         </div>
                     </div>
 
-                  {% if user.is_superuser %}
+                  {% if request.user.is_superuser %}
                     <div class="panel panel-white border-top-black">
                         <div class="panel-heading">
                             <h3 class="panel-title">Admin tools</h3>

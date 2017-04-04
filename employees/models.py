@@ -26,7 +26,7 @@ class Employee(models.Model):
         self._memes = '\n'.join(filter(lambda x: x.strip(), value))
 
     def __str__(self):
-        return "Employee {}: {} {}".format(
+        return "{}: {} {}".format(
             self.pk,
             self.firstName,
             self.lastName

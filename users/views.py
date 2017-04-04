@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-
+from . import bsuir_schedule
 
 def show(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'users/show.html', {'user': user, 'username': request.user})
+    context = {
+        'user': user,
+        'username': request.user,
+        'schedule': bsuir_schedule.get_html()
+    }
+    return render(request, 'users/show.html', context)
 
 
 def edit(request, username):
