@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+
+import requests
+from xml.dom import minidom
+from datetime import date, timedelta
+
+CUR_DATE = None
+CUR_WEEK = None
+
+class Schedule:
+    SCHEDULE_URL = "https://www.bsuir.by/schedule/rest/schedule/%s"
+
+    DAYS = {
+        'Понедельник': 0,
+        'Вторник':     1,
+        'Среда':       2,
+        'Четверг':     3,
+        'Пятница':     4,
+        'Суббота':     5,
+    }
+
+    # self.schedule[week][day]
+    schedule = [[[], [], [], [], [], []],
+                [[], [], [], [], [], []],
+                [[], [], [], [], [], []],
+                [[], [], [], [], [], []]]
+
+    def __init__(self, group_number):
+        self.schedule_respond = requests.get(self.SCHEDULE_URL % group_number)
+
+    def parse(self):
+        self.schedule_respond.text.replace('<weekNumber>0</weekNumber>', '')
+        xmldoc = minidom.parseString(self.schedule_respond.text)
+        weekdays = xmldoc.getElementsByTagName('scheduleModel')
+        for day_dom in weekdays:
+            day_num = self.DAYS[self.attr(day_dom, 'weekDay')]
+            lessons_dom = day_dom.getElementsByTagName('schedule')
+            for lesson_dom in lessons_dom:
+                lesson = {}
+
+                lesson['auditory'] = self.attr(lesson_dom, 'auditory')
+                lesson['lessonTime'] = self.attr(lesson_dom, 'lessonTime')
+                lesson['lessonType'] = self.attr(lesson_dom, 'lessonType')
+                lesson['subject'] = self.attr(lesson_dom, 'subject')
+                lesson['numSubgroup'] = self.attr(lesson_dom, 'numSubgroup')
+                lesson['teacher'] = self.teacher(lesson_dom)
+
+                weeks = lesson_dom.getElementsByTagName('weekNumber')
+                for week in weeks:
+                    week_num = int(week.childNodes[0].data) - 1
+                    self.schedule[week_num][day_num].append(lesson)
+        return self.schedule
+
+    def teacher(self, lesson_dom):
+        employee_dom = lesson_dom.getElementsByTagName('employee')
+        empl = {}
+        if employee_dom:
+            e_d = employee_dom[0]
+            empl['lastName'] = e_d.getElementsByTagName(
+                'lastName')[0].childNodes[0].data
+            empl['firstName'] = e_d.getElementsByTagName(
+                'firstName')[0].childNodes[0].data
+        return empl
+
+    def attr(self, dom, attr_name):
+        attr = dom.getElementsByTagName(attr_name)
+        return attr[0].childNodes[0].data if attr else None
+
+
+class GroupScheduler:
+    GROUPS_URL = "https://www.bsuir.by/schedule/rest/studentGroup"
+
+    def __init__(self):
+        self.groups_respond = requests.get(self.GROUPS_URL)
+        self.groups_ids = self.parse()
+
+    def parse(self):
+        xmldom = minidom.parseString(self.groups_respond.text)
+        groups_xml = xmldom.getElementsByTagName('studentGroup')
+        groups = {}
+        for group_dom in groups_xml:
+            id = group_dom.getElementsByTagName('id')[0].childNodes[0].data
+            name = group_dom.getElementsByTagName('name')[0].childNodes[0].data
+            groups[name] = id
+        return groups
+
+    def group(self, number):
+        schedule = Schedule(self.groups_ids[number])
+        return schedule.parse()
+
+
+def html(schedule):
+    global CUR_DATE
+    global CUR_WEEK
+    today = date.today()
+    if CUR_DATE is None or CUR_DATE != today:
+        CUR_DATE = today
+        CUR_WEEK = int(requests.get(
+            "https://www.bsuir.by/schedule/rest/currentWeek/date/%s" %
+                 (today.strftime("%d.%m.%Y"))).text) - 1
+    html = '<ul>'
+    for lesson in schedule[CUR_WEEK][today.weekday()]:
+        html += "<li>{lessonType}: {subject} {time} {place} ({firstName} {lastName})".format(
+            lessonType=lesson['lessonType'],
+            place=lesson['auditory'] or '',
+            subject=lesson['subject'],
+            firstName=lesson['teacher']['firstName'],
+            lastName=lesson['teacher']['lastName'],
+            time=lesson['lessonTime'],
+        )
+        if lesson['numSubgroup'] != '0':
+            html += " (%s)" % lesson['numSubgroup']
+        html += '</li>'
+    html += '</ul>'
+    return html

@@ -192,6 +192,16 @@
                                     </span>
                                 </a>
                             </div>
+                            <div class="body-section">
+                                <a id="groups-updater" class="btn btn-success has-spinner">
+                                    <span class="text">
+                                        Update groups
+                                    </span>
+                                    <span class="spinner">
+                                        <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                    </span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                   {% endif %}
@@ -201,21 +211,26 @@
     </div>
 </div>
 <script type="text/javascript">
- $("#employee-updater").on('click', function(event) {
-     $.get({
-         url: "{% url 'employees:update' %}",
-         beforeSend: function() {
-             $("#employee-updater .text").text("Update employees");
-             $("#employee-updater").toggleClass('active');
-             $("#employee-updater").toggleClass('disabled');
-         },
-         success: function(response) {
-             $("#employee-updater").toggleClass('active');
-             $("#employee-updater").toggleClass('disabled');
-             $("#employee-updater .text").append('&nbsp;<i class="fa fa-check" aria-hidden="true"></i>');
-         }
+ function set_updater(name, url) {
+     var updater = "#" + name + "-updater"
+     $(updater).on('click', function(event) {
+         $.get({
+             url: url,
+             beforeSend: function() {
+                 $(updater + " .text").text("Update " + name);
+                 $(updater).toggleClass('active');
+                 $(updater).toggleClass('disabled');
+             },
+             success: function(response) {
+                 $(updater).toggleClass('active');
+                 $(updater).toggleClass('disabled');
+                 $(updater + " .text").append('&nbsp;<i class="fa fa-check" aria-hidden="true"></i>');
+             }
+         });
      });
- });
+ }
+ set_updater("employee", "{% url 'employees:update' %}");
+ set_updater("groups", "{% url 'groups:update' %}");
 </script>
 
 {% endblock %}
