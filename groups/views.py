@@ -13,3 +13,10 @@ def update(request):
         group.schedule = scheduler.group(group.number)
         group.save()
     return HttpResponse("Success")
+
+def index(request):
+    context = {
+        'username': request.user.username,
+        'groups': Group.objects.all(),
+    }
+    return render(request, 'groups/index.html', context)

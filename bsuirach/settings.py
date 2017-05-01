@@ -71,6 +71,7 @@ TEMPLATES = [
             'home/templates',
             'loginsys/templates',
             'employees/templates',
+            'groups/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

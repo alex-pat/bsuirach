@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+<ul>
+{% for group in groups %}
+<li>{{ group }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
