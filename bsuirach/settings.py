@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'bsuirach.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
-
+    'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend'
 )
 # Database
