@@ -13,8 +13,3 @@ def index(request):
         'employees': employees,
         'username': auth.get_user(request).username
     })
-
-
-@login_required
-def home(request):
-    return render(request, 'home/index.html')
