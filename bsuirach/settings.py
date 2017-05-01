@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'bsuirach.wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend'
 )
 # Database
@@ -165,6 +166,9 @@ SOCIAL_AUTH_GITHUB_SECRET = '88fa95aa48ef8b538cc4f7e0d8010ed6c91015cb'
 
 SOCIAL_AUTH_TWITTER_KEY = '12i4lNSONp615LRIWQxRWG2yf'
 SOCIAL_AUTH_TWITTER_SECRET = 'nuSIXa8EidEdMA6IGrPqQZwBsNTecKFm0XxpSidoKDhrmxGd6S'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '671118413096849'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd574dfaf6f8f4475b5d18de30e46eaff'
 
 STAR_RATINGS_RERATE = False
 
