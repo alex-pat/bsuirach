@@ -20,6 +20,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('loginsys.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^users/', include('users.urls')),
     url(r'^employees/', include('employees.urls')),
     url(r'^comments/', include('django_comments.urls')),

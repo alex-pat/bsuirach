@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from groups import bsuir_schedule
 
+
 def show(request, username):
     user = get_object_or_404(User, username=username)
     groups = user.group_set.all()

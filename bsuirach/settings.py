@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'images',
     'taggit',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'bsuirach.urls'
@@ -80,6 +82,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -87,7 +92,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bsuirach.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
 
+    'django.contrib.auth.backends.ModelBackend'
+)
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -143,7 +152,17 @@ STATIC_URL = '/static/'
 
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
+# SOCIAL AUTH
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
+LOGIN_REDIRECT_URL = 'home'
+
+SOCIAL_AUTH_GITHUB_KEY = '6095c17092d2659d028c'
+SOCIAL_AUTH_GITHUB_SECRET = '88fa95aa48ef8b538cc4f7e0d8010ed6c91015cb'
+
 
 STAR_RATINGS_RERATE = False
 
