@@ -3,8 +3,12 @@
 
 {% block body %}
 <ul>
-{% for group in groups %}
-<li>{{ group }}</li>
-{% endfor %}
+  {% for group in groups %}
+    <li>
+        <a href="{% url 'groups:show' number=group.number %}">
+          {{ group }}
+        </a>
+    </li>
+  {% endfor %}
 </ul>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+
+<h1>{{ group }}</h1>
+
+<p>
+ {% autoescape off %}
+ {{ schedule }}
+ {% endautoescape %}
+</p>
+
+<p>Students:
+<ul>
+  {% for student in group.users.all %}
+    <li>
+        <a href="{% url 'users:show' username=student.username %}">
+           {{ student }} ({{ student.first_name}} {{student.last_name }})
+        </a>
+    </li>
+  {% endfor %}
+</ul>
+</p>
+{% endblock %}

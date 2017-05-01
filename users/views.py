@@ -4,12 +4,13 @@ from groups import bsuir_schedule
 
 def show(request, username):
     user = get_object_or_404(User, username=username)
+    groups = user.group_set.all()
     context = {
         'user': user,
         'username': request.user,
         'schedule': bsuir_schedule.html(
-            user.group_set.all()[0].schedule
-        )
+            groups[0].schedule
+        ) if len(groups) > 0 else ''
     }
     return render(request, 'users/show.html', context)
 

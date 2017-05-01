@@ -29,7 +29,11 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                        {% if username %}
-                        <li><a href="/users/{{ username }}">{{ username }}</a></li>
+                        <li>
+                            <a href="{% url 'users:show' username=username %}">
+                               {{ username }}
+                            </a>
+                        </li>
                         <li class="divider"></li>
                         <li><a href="/auth/logout/">Logout</a></li>
                        {% else %}

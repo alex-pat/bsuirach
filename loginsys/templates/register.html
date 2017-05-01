@@ -2,34 +2,33 @@
 
 {% block body %}
 
-{{ form }}
-<!-- <div class="container">
-     <div class="col-xs-offset-4 col-xs-4">
-     <div class="well" align="center">
-     <fieldset>
-     <legend>Registration</legend>
-     <form method="post" action="/auth/register/">
+<div class="container">
+    <div class="col-xs-offset-4 col-xs-4">
+        <div class="well" align="center">
+            <fieldset>
+                <legend>Registration</legend>
+                <form method="post" action="/auth/register/">
      {% csrf_token %}
-     <div class="form-group">
-     <input id="username" class="form-control" placeholder="Username" maxlength="150" name="username" type="text" required>
-     </div>
+                    <div class="form-group">
+                        <input id="username" class="form-control" placeholder="Username" maxlength="150" name="username" type="text" required>
+                    </div>
 
-     <div class="form-group">
-     <input  class='form-control' placeholder="Password" id="id_password1" name="password1" type="password" required>
-     </div>
+                    <div class="form-group">
+                        <input  class='form-control' placeholder="Password" id="id_password1" name="password1" type="password" required>
+                    </div>
 
-     <div class="form-group">
-     <input  class='form-control' placeholder="Password confirmation" id="id_password2" name="password2" type="password" required>
-     </div>
+                    <div class="form-group">
+                        <input  class='form-control' placeholder="Password confirmation" id="id_password2" name="password2" type="password" required>
+                    </div>
 
-     <div class="alert alert-info">Password equired. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+                    <div class="alert alert-info">Password equired. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
 
-     <div class="actions">
-     <input class="btn btn-default" type="submit" value="OK">
-     </div>
-     <br/>
-     </fieldset>
-     </div>
-     </div>
-     </form> -->
+                    <div class="actions">
+                        <input class="btn btn-default" type="submit" value="OK">
+                    </div>
+                    <br/>
+            </fieldset>
+        </div>
+    </div>
+                </form>
 {% endblock %}

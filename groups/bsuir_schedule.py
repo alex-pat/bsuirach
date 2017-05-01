@@ -93,7 +93,7 @@ def html(schedule):
     global CUR_DATE
     global CUR_WEEK
     today = date.today()
-    if CUR_DATE is None or CUR_DATE != today:
+    if CUR_DATE is None or CUR_DATE != today or CUR_WEEK is None:
         CUR_DATE = today
         CUR_WEEK = int(requests.get(
             "https://www.bsuir.by/schedule/rest/currentWeek/date/%s" %
@@ -104,12 +104,74 @@ def html(schedule):
             lessonType=lesson['lessonType'],
             place=lesson['auditory'] or '',
             subject=lesson['subject'],
-            firstName=lesson['teacher']['firstName'],
-            lastName=lesson['teacher']['lastName'],
+            firstName=lesson['teacher'].get('firstName'),
+            lastName=lesson['teacher'].get('lastName'),
             time=lesson['lessonTime'],
         )
         if lesson['numSubgroup'] != '0':
             html += " (%s)" % lesson['numSubgroup']
         html += '</li>'
     html += '</ul>'
+    return html
+
+def html_table(schedule):
+    html = '' if CUR_WEEK is None else '<p>{} неделя</p>'.format(CUR_WEEK + 1)
+    html += '<table class="table table-striped table-bordered table-hover">'
+    TIMES = [
+        '08:00-09:35',
+        '09:45-11:20',
+        '11:40-13:15',
+        '13:25-15:00',
+        '15:20-16:55',
+        '17:05-18:40',
+        '18:45-20:20',
+        '20:25-22:00',
+    ]
+    DAYS = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
+
+    html += '<tr><th></th>'
+    for time in TIMES:
+        html += '<th>%s</th>' % time
+    html += '</tr>'
+
+    for week in range(4):
+        html += ("<tr><td colspan='100%' class='info'><div style='text-align:center'><strong>" +
+                 "%d неделя</strong></div></td></td>" % (week + 1))
+
+        for day in range(6):
+            html += '<tr><td><strong>%s</strong></td>' % DAYS[day]
+            for time in TIMES:
+                lessons = []
+                lesson_type = None
+                for lesson in schedule[week][day]:
+                    if lesson['lessonTime'] == time:
+                        lesson_type = lesson['lessonType']
+                        _lesson = ''
+                        if lesson['numSubgroup'] != '0':
+                            _lesson += "(%s) " % lesson['numSubgroup']
+                        _lesson += "{lessonType}: {subject} {time} {place}".format(
+                            lessonType=lesson['lessonType'],
+                            place=lesson['auditory'] or '',
+                            subject=lesson['subject'],
+                            time=lesson['lessonTime'],
+                        )
+                        if lesson['teacher'] != {}:
+                            _lesson += ' ({firstName} {lastName})'.format(
+                                firstName=lesson['teacher'].get('firstName'),
+                                lastName=lesson['teacher'].get('lastName'),
+                            )
+                        lessons.append(_lesson)
+                if len(lessons) == 0:
+                    html += '<td>'
+                else:
+                   html += '<td class="{}" >'.format({
+                       'ЛК': 'success',
+                       'ПЗ': 'warning',
+                       'ЛР': 'danger',
+                    }[lesson_type]
+                )
+                html += "<hr>".join(lessons)
+                html += '</td>'
+            html += '</tr>'
+    html += '<table>'
     return html

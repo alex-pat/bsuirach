@@ -19,7 +19,12 @@
                             <div>{{ user.username }}</div>
                             <div>{{ user.email }}</div>
                             {% for group in user.group_set.all %}
-                            <div>{{ group.number }}</div>
+                            <div>
+                                <a href="{% url 'groups:show' number=group.number %}">
+ {{ group.number }}
+
+                                </a>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>

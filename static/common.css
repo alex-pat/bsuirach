@@ -657,3 +657,8 @@ bg-success {
 .has-spinner.btn.active .spinner {
     width: 16px;
 }
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
