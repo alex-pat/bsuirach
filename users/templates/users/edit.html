@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load cloudinary %}
 
 {% block body %}
 <div class="container">
@@ -9,7 +10,13 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="image-container bg2" style='background-image:url("{% static 'wallpaper.jpeg' %}")'>
-                            <img src="{% static 'default_avatar.png' %}" class="avatar" alt="avatar">
+                            <img
+                                {% if has_avatar %}
+                                src="{{ user.image.image.url }}"
+                                {% else %}
+                                src="{% static 'default_avatar.png' %}"
+                                {% endif %}
+                                class="avatar" alt="avatar">
                         </div>
                     </div>
                     <div class="col-sm-12">
@@ -24,7 +31,7 @@
             </div>
             <div class="row">
 
-                <div class="col-sm-6 col-sm-offset-3">
+                <div class="col-sm-6">
                     <form method="POST" action="/users/{{ username }}/update">
                         {% csrf_token %}
                         <div class="panel panel-white border-top-purple">
@@ -62,6 +69,34 @@
                                     </p>
                                 </div>
                                 <input type="submit" class='btn btn-primary'>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-white border-top-purple">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Change avatar</h3>
+                                <div class="controls pull-right">
+                                    <span class="pull-right clickable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <form method="POST"
+                                      action="{% url 'images:set_avatar' username=user.username %}"
+                                enctype="multipart/form-data">
+                                <div class="body-section">
+                                    <!-- <h5 class="section-heading">Asdf</h5> -->
+                                    <p class="section-content">
+                                       {% csrf_token %}
+                                       {{ image_form }}
+
+                                    </p>
+                                </div>
+                                <input type="submit" class='btn btn-primary'>
+                                </form>
                             </div>
                         </div>
                     </form>

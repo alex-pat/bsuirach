@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 def index(request):
-    employees = Employee.objects.all()
+    employees = Employee.objects.order_by('lastName')
     return render_to_response('home/index.html', {
         'employees': employees,
         'username': auth.get_user(request).username

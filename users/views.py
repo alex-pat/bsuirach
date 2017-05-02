@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from images.forms import ImageForm
 from groups import bsuir_schedule
 
 
@@ -9,6 +10,7 @@ def show(request, username):
     context = {
         'user': user,
         'username': request.user,
+        'has_avatar': hasattr(user, 'image'),
         'schedule': bsuir_schedule.html(
             groups[0].schedule
         ) if len(groups) > 0 else ''
@@ -20,7 +22,15 @@ def edit(request, username):
     user = request.user
     if username != user.username:
         return redirect("/")
-    return render(request, 'users/edit.html', {'user': user, 'username': username})
+    form = ImageForm()
+    context = {
+        'user': user,
+        'username': username,
+        'has_avatar': hasattr(user, 'image'),
+        'image_form': form
+    }
+    return render(request, 'users/edit.html', context)
+
 
 def update(request, username):
     user = request.user
