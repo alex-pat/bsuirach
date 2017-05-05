@@ -635,23 +635,23 @@ bg-success {
 }
 
 .spinner {
-  display: inline-block;
-  opacity: 0;
-  width: 0;
+	display: inline-block;
+	opacity: 0;
+	width: 0;
 
-  -webkit-transition: opacity 0.25s, width 0.25s;
-  -moz-transition: opacity 0.25s, width 0.25s;
-  -o-transition: opacity 0.25s, width 0.25s;
-  transition: opacity 0.25s, width 0.25s;
+	-webkit-transition: opacity 0.25s, width 0.25s;
+	-moz-transition: opacity 0.25s, width 0.25s;
+	-o-transition: opacity 0.25s, width 0.25s;
+	transition: opacity 0.25s, width 0.25s;
 }
 
 .has-spinner.active {
-  cursor:progress;
+	cursor:progress;
 }
 
 .has-spinner.active .spinner {
-  opacity: 1;
-  width: auto; /* This doesn't work, just fix for unkown width elements */
+	opacity: 1;
+	width: auto; /* This doesn't work, just fix for unkown width elements */
 }
 
 .has-spinner.btn.active .spinner {
@@ -661,4 +661,19 @@ bg-success {
 hr {
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+.group-card {
+    border-radius: 6px;
+    border: 1px solid #c8c8c8;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+}
+
+.group-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }

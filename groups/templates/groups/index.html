@@ -2,13 +2,21 @@
 {% load static %}
 
 {% block body %}
-<ul>
-  {% for group in groups %}
-    <li>
+<div class="container">
+    <div class="row">
+      {% for group in groups %}
         <a href="{% url 'groups:show' number=group.number %}">
-          {{ group }}
+        <div class="col-sm-2">
+            <div class="group-card">
+                <div class="faclt-logo">
+                    <img src="{% static 'faculties/fksis.png' %}" alt="fksis" />
+                </div>
+                <div class="group-number">
+                    <h2>{{ group }}</h2>
+                </div>
+            </div>
+        </div>
         </a>
-    </li>
-  {% endfor %}
-</ul>
+      {% endfor %}
+</div>
 {% endblock %}
