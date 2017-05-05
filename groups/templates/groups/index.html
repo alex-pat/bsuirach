@@ -6,7 +6,7 @@
     <div class="row">
       {% for group in groups %}
         <a href="{% url 'groups:show' number=group.number %}">
-        <div class="col-sm-2">
+        <div class="col-lg-2 col-xs-6">
             <div class="group-card">
                 <div class="faclt-logo">
                     <img src="{% static 'faculties/fksis.png' %}" alt="fksis" />
