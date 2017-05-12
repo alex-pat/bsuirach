@@ -1,9 +1,36 @@
 {% extends 'main.html' %}
 
 {% block body %}
-<div class='jumbotron'>
-        <h1>BSUIRach - your new family</h1>
-        <br />
+<div class='jumbotron col-sm-12'>
+    <div class='col-sm-12'><h1>BSUIRach - your new family</h1></div>
+    <div class='col-sm-4'>
+        <h3>Top Employees</h3>
+        <ul>
+        {% for employee, comments in top_employees %}
+            <li>
+                <a href='/employees/{{ employee.id }}'>
+                {{ employee.lastName }}
+                {{ employee.firstName }}
+                {{ employee.middleName }}
+                (каф. {{ employee.academicDepartment }})
+                </a>
+                ({{ comments }} comments)
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class='col-sm-3'>
+        <h3>Top Users</h3>
+        <ul>
+        {% for user, comments in top_users %}
+            <li>
+                <a href="{% url 'users:show' username=user.username %}">
+                 {{ user.username }} ({{ comments}} comments)</li>
+                </a>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class='col-sm-5'>
         <h3>Teachers:</h3>
         <ul>
             {% for employee in employees %}
@@ -17,5 +44,6 @@
             </li>
             {% endfor %}
         </ul>
+    </div>
 </div>
 {% endblock %}
