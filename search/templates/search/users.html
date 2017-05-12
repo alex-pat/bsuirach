@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block body %}
+
+<div class='col-sm-3'>
+    <form action="{% url 'search:users' %}"
+          method="get">
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Users search"
+                   value="{{ query }}"
+                   name='query'>
+        </div>
+    </form>
+</div>
+<div class='col-sm-6'>
+    <ul>
+{% for user in users %}
+        <li>
+            <a href="{% url 'users:show' username=user.username %}">
+                 {{ user.username }}
+            </a>
+        </li>
+{% endfor %}
+    </ul>
+</div>
+<div class='col-sm-3'>
+<a href="{% url 'search:employees' %}">Employees search</a>
+<br/>
+<a href="{% url 'search:users' %}">Users search</a>
+<br/>
+<a href="{% url 'search:comments' %}">Comments search</a>
+<br/>
+<a href="{% url 'search:tags' %}">Tag search</a>
+</div>
+{% endblock %}

@@ -35,7 +35,7 @@
         <ul>
             {% for employee in employees %}
             <li>
-                <a href='/employees/{{ employee.id }}'>
+                <a href='{% url "employees:show" employee_id=employee.pk %}'>
                 {{ employee.lastName }}
                 {{ employee.firstName }}
                 {{ employee.middleName }}

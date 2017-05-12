@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.postgres',
     'registration',
     'home',
     'loginsys',
@@ -49,7 +50,8 @@ INSTALLED_APPS = [
     'cloudinary',
     'images',
     'taggit',
-    'social_django'
+    'social_django',
+    'search',
 ]
 
 MIDDLEWARE = [

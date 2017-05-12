@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block body %}
+
+<div class='col-sm-3'>
+    <form action="{% url 'search:tags' %}"
+          method="get">
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Employees by tag search"
+                   value="{{ query }}"
+                   name='query'>
+        </div>
+    </form>
+</div>
+<div class='col-sm-6'>
+    <ul>
+{% for employee in employees %}
+        <li>
+            <a href='/employees/{{ employee.id }}'>
+        {{ employee.lastName }}
+        {{ employee.firstName }}
+        {{ employee.middleName }}
+        (каф. {{ employee.academicDepartment }})
+            </a>
+        </li>
+{% endfor %}
+    </ul>
+</div>
+<div class='col-sm-3'>
+<a href="{% url 'search:employees' %}">Employees search</a>
+<br/>
+<a href="{% url 'search:users' %}">Users search</a>
+<br/>
+<a href="{% url 'search:comments' %}">Comments search</a>
+<br/>
+<a href="{% url 'search:tags' %}">Tag search</a>
+</div>
+{% endblock %}

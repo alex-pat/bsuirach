@@ -126,7 +126,11 @@
         {% if employee.tags.exists %}
           <p>Tags:
             {% for tag in employee.tags.all %}
-              <div class='tag'> {{ tag }} </div>
+              <div class='tag'>
+                  <a href="{% url 'search:tags' %}?query={{tag}}">
+                    {{ tag }}
+                  </a>
+              </div>
             {% endfor %}
           </p>
           <style type="text/css" media="screen">

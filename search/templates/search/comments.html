@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block body %}
+
+<div class='col-sm-3'>
+    <form action="{% url 'search:comments' %}"
+          method="get">
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Comments search"
+                   value="{{ query }}"
+                   name='query'>
+        </div>
+    </form>
+</div>
+<div class='col-sm-6'>
+    <ul>
+{% for comment in comments %}
+        <li>
+            "{{ comment.comment }}"
+            to
+            <a href="{% url 'employees:show' employee_id=comment.object_pk %}">
+                 {{ comment.content_object.firstName }}
+                 {{ comment.content_object.lastName }}
+            </a>
+            by
+            <a href="{% url 'users:show' username=comment.user.username %}">
+                 {{ comment.user.username }}
+            </a>
+        </li>
+{% endfor %}
+    </ul>
+</div>
+<div class='col-sm-3'>
+<a href="{% url 'search:employees' %}">Employees search</a>
+<br/>
+<a href="{% url 'search:users' %}">Users search</a>
+<br/>
+<a href="{% url 'search:comments' %}">Comments search</a>
+<br/>
+<a href="{% url 'search:tags' %}">Tag search</a></div>
+{% endblock %}
