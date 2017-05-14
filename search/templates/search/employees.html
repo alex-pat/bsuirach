@@ -1,40 +1,94 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block body %}
 
-<div class='col-sm-3'>
+<div id="header_wrap2">
+        <div id="header_wrap1">
+          <div id="header" style="display: none;">
+            <h1 id="title">false</h1>
+          </div>
+        </div>
+</div>
+<div id="wrap_between"></div>
+<div id="wrap3"><div id="wrap2">
+  <div id="wrap1">
+    <div id="content" class=""><div class="wide_column_left">
+  <div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+      <div class="page_block ui_rmenu ui_rmenu_pr _ui_rmenu_auto_expand ui_rmenu_sliding" id="search_menu" role="list">
+
+          <a id="ui_rmenu_people" href="{% url 'search:employees' %}" class="ui_rmenu_item _ui_item_people search_menu_people ui_rmenu_item_sel" role="listitem" >
+  <span>Преподаватели</span>
+</a><a id="ui_rmenu_statuses" href="{% url 'search:users' %}" class="ui_rmenu_item _ui_item_statuses search_menu_statuses" role="listitem" >
+  <span>Студенты</span>
+</a><a id="ui_rmenu_communities" href="{% url 'search:comments' %}" class="ui_rmenu_item _ui_item_communities search_menu_communities" role="listitem" >
+  <span>Комментарии</span>
+</a><a id="ui_rmenu_audio" href="{% url 'search:tags' %}" class="ui_rmenu_item _ui_item_audio search_menu_audio" role="listitem" >
+  <span>Тэги</span>
+</a>
+<div class="ui_rmenu_slider _ui_rmenu_slider" style="height: 20px; top: 13px; transform: translateY(0px);"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wide_column_wrap">
+    <div class="wide_column" id="wide_column">
+      <div id="search_content" class="search_content page_block clear_fix">
+
+          <div id="search_query_wrap" class="search_query_wrap">
+    <div class="ui_search ui_search_field_empty _wrap">
+        <div class="ui_search_input_block">
     <form action="{% url 'search:employees' %}"
           method="get">
-        <div class="form-group">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Employees search"
-                   value="{{ query }}"
-                   name='query'>
-        </div>
+    <input type="text" class="ui_search_field _field" id="search_query" autocomplete="off" placeholder="Start typing any name or word" name='query' value="{{ query }}">
     </form>
+
+  </div>
+
+<div class="results_container" style="width: 552px;"><div class="result_list" style="display: none; opacity: 1; width: 552px;"><ul></ul></div></div></div>
+  </div>
 </div>
-<div class='col-sm-6'>
-    <ul>
+<div id="search_auto_rows" class="search_auto_rows page_block"></div>
+<div id="results" class="search_results search_people_results page_block">
+
+
 {% for employee in employees %}
-        <li>
-            <a href='/employees/{{ employee.id }}'>
+
+    <div class="people_row search_row clear_fix">
+  <div class="img" >
+      <a href="{% url 'employees:show' employee_id=employee.id %}"  class="search_item_img_link">
+          <img class="search_item_img"
+               {% if employee.photoLink %}
+               src="{{ employee.photoLink }}"
+               {% else %}
+               src="{% static 'default_avatar.png' %}"
+               {% endif %}
+          ></a>
+  </div>
+  <div class="info">
+      <div class="labeled name">
+          <a href="{% url 'employees:show' employee_id=employee.id %}" >
         {{ employee.lastName }}
         {{ employee.firstName }}
         {{ employee.middleName }}
-        (каф. {{ employee.academicDepartment }})
-            </a>
-        </li>
+          </a></div><div class="labeled ">
+              каф. {{ employee.academicDepartment }}
+          </div><div class="labeled "><a mention=""  href="{% url 'employees:show' employee_id=employee.id %}" class="group_link">
+{{ employee.description }}
+          </a></div>
+  </div>
+    </div>
+
 {% endfor %}
-    </ul>
+
+
+
 </div>
-<div class='col-sm-3'>
-<a href="{% url 'search:employees' %}">Employees search</a>
-<br/>
-<a href="{% url 'search:users' %}">Users search</a>
-<br/>
-<a href="{% url 'search:comments' %}">Comments search</a>
-<br/>
-<a href="{% url 'search:tags' %}">Tag search</a>
-</div>
+    </div>
+    </div>
+  </div>
+</div></div>
+  </div>
+</div></div>
+
 {% endblock %}

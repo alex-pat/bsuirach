@@ -1,49 +1,175 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block body %}
-<div class='jumbotron col-sm-12'>
-    <div class='col-sm-12'><h1>BSUIRach - your new family</h1></div>
-    <div class='col-sm-4'>
-        <h3>Top Employees</h3>
-        <ul>
-        {% for employee, comments in top_employees %}
-            <li>
-                <a href='/employees/{{ employee.id }}'>
-                {{ employee.lastName }}
-                {{ employee.firstName }}
-                {{ employee.middleName }}
-                (каф. {{ employee.academicDepartment }})
-                </a>
-                ({{ comments }} comments)
-            </li>
-        {% endfor %}
-        </ul>
-    </div>
-    <div class='col-sm-3'>
-        <h3>Top Users</h3>
-        <ul>
-        {% for user, comments in top_users %}
-            <li>
-                <a href="{% url 'users:show' username=user.username %}">
-                 {{ user.username }} ({{ comments}} comments)</li>
-                </a>
-        {% endfor %}
-        </ul>
-    </div>
-    <div class='col-sm-5'>
-        <h3>Teachers:</h3>
-        <ul>
-            {% for employee in employees %}
-            <li>
-                <a href='{% url "employees:show" employee_id=employee.pk %}'>
-                {{ employee.lastName }}
-                {{ employee.firstName }}
-                {{ employee.middleName }}
-                (каф. {{ employee.academicDepartment }})
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+
+<div id="header_wrap2">
+        <div id="header_wrap1">
+          <div id="header" style="display: none;">
+            <h1 id="title">false</h1>
+          </div>
+        </div>
 </div>
+<div id="wrap_between"></div>
+<div id="wrap3"><div id="wrap2">
+  <div id="wrap1">
+    <div id="content" class=""><div class="wide_column_left">
+  <div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+
+
+
+        <div class="page_block ui_rmenu ui_rmenu_pr _ui_rmenu_auto_expand ui_rmenu_sliding" id="search_menu" role="list">
+
+    <a id="ui_rmenu_audio" href="#" class="ui_rmenu_item _ui_item_audio search_menu_audio ui_rmenu_item_sel" role="listitem" >
+  <span>Top users</span>
+</a>
+<div class="ui_rmenu_slider _ui_rmenu_slider" style="height: 20px; top: 13px; transform: translateY(0px);"></div>
+      </div>
+    </div>
+  </div>
+<div id="search_auto_rows" class="search_auto_rows page_block"></div>
+<div id="results" class="search_results search_people_results page_block">
+
+{% for user, comments in top_users %}
+
+    <div class="people_row search_row clear_fix">
+  <div class="img" >
+      <a href="{% url 'users:show' username=user.username %}"  class="search_item_img_link">
+          <img class="search_item_img"
+               {% if user.image.image.url %}
+               src="{{ user.image.image.url }}"
+               {% else %}
+               src="{% static 'default_avatar.png' %}"
+               {% endif %}
+          ></a>
+  </div>
+  <div class="info">
+      <div class="labeled name">
+          <a href="{% url 'users:show' username=user.username %}" >
+{{ user.username }}
+          </a></div><div class="labeled ">
+{{ user.first_name }}
+{{ user.last_name }}
+          </div><div class="labeled "><a mention=""  href="{% url 'users:show' username=user.username %}" class="group_link">
+              {{ comments }} комментариев
+                            {% for group in user.group_set.all %}
+              <br />
+{{group.number}}
+              {% endfor %}
+
+          </a></div>
+  </div>
+    </div>
+{% endfor %}
+</div>
+
+
+
+<div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+        <div class="page_block ui_rmenu ui_rmenu_pr _ui_rmenu_auto_expand ui_rmenu_sliding" id="search_menu" role="list">
+
+    <a id="ui_rmenu_audio" href="#" class="ui_rmenu_item _ui_item_audio search_menu_audio ui_rmenu_item_sel" role="listitem" >
+  <span>Top employees</span>
+</a>
+<div class="ui_rmenu_slider _ui_rmenu_slider" style="height: 20px; top: 13px; transform: translateY(0px);"></div>
+      </div>
+    </div>
+  </div>
+
+<div id="search_auto_rows" class="search_auto_rows page_block"></div>
+<div id="results" class="search_results search_people_results page_block">
+
+{% for employee, comments in top_employees %}
+
+    <div class="people_row search_row clear_fix">
+  <div class="img" >
+      <a href="{% url 'employees:show' employee_id=employee.id %}"  class="search_item_img_link">
+          <img class="search_item_img"
+               {% if employee.photoLink %}
+               src="{{ employee.photoLink }}"
+               {% else %}
+               src="{% static 'default_avatar.png' %}"
+               {% endif %}
+          ></a>
+  </div>
+  <div class="info">
+      <div class="labeled name">
+          <a href="{% url 'employees:show' employee_id=employee.id %}" >
+        {{ employee.lastName }}
+        {{ employee.firstName }}
+        {{ employee.middleName }}
+          </a></div><div class="labeled ">
+              каф. {{ employee.academicDepartment }}
+          </div><div class="labeled "><a mention=""  href="{% url 'employees:show' employee_id=employee.id %}" class="group_link">
+              {{ comments }} коментариев
+              <br />
+{{ employee.description }}
+          </a></div>
+  </div>
+    </div>
+{% endfor %}
+</div>
+
+
+
+<div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+        <div class="page_block ui_rmenu ui_rmenu_pr _ui_rmenu_auto_expand ui_rmenu_sliding" id="search_menu" role="list">
+
+    <a id="ui_rmenu_audio" href="#" class="ui_rmenu_item _ui_item_audio search_menu_audio ui_rmenu_item_sel" role="listitem" >
+  <span>All employees</span>
+</a>
+<div class="ui_rmenu_slider _ui_rmenu_slider" style="height: 20px; top: 13px; transform: translateY(0px);"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div id="search_auto_rows" class="search_auto_rows page_block"></div>
+<div id="results" class="search_results search_people_results page_block">
+
+
+{% for employee in employees %}
+
+    <div class="people_row search_row clear_fix">
+  <div class="img" >
+      <a href="{% url 'employees:show' employee_id=employee.id %}"  class="search_item_img_link">
+          <img class="search_item_img"
+               {% if employee.photoLink %}
+               src="{{ employee.photoLink }}"
+               {% else %}
+               src="{% static 'default_avatar.png' %}"
+               {% endif %}
+          ></a>
+  </div>
+  <div class="info">
+      <div class="labeled name">
+          <a href="{% url 'employees:show' employee_id=employee.id %}" >
+        {{ employee.lastName }}
+        {{ employee.firstName }}
+        {{ employee.middleName }}
+          </a></div><div class="labeled ">
+              каф. {{ employee.academicDepartment }}
+          </div><div class="labeled "><a mention=""  href="{% url 'employees:show' employee_id=employee.id %}" class="group_link">
+{{ employee.description }}
+          </a></div>
+  </div>
+    </div>
+{% endfor %}
+</div>
+
+
+
+
+
+    </div>
+    </div>
+  </div>
+</div></div>
+  </div>
+</div></div>
+
 {% endblock %}

@@ -9,7 +9,8 @@ TOP_EMPLOYEES = None
 def update_users():
     global TOP_USERS
     users = [(user, len(user.comment_comments.all()))
-             for user in User.objects.all()]
+             for user in User.objects.all()
+             if user.comment_comments.count() > 0]
     users.sort(key=lambda x: -x[1])
     TOP_USERS = users[:10]
 
@@ -22,7 +23,8 @@ def update_employees():
         if empl_pk not in employees:
             employees[empl_pk] = 0
         employees[empl_pk] += 1
-    empls = [empl_pk for empl_pk, comments in sorted(employees.items(), key=lambda e: e)]
+    empls = [empl_pk for empl_pk, comments in sorted(employees.items(),
+                                                     key=lambda e: -e[1])]
     TOP_EMPLOYEES = [(Employee.objects.get(pk=pk), employees[pk])
                      for pk in empls[:10]]
 

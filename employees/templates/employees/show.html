@@ -10,203 +10,50 @@
 <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'jqcloud/jqcloud-1.0.4.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'jqcloud/jqcloud.css' %}">
-<div class="container">
-  <div class="row">
-    <div class="col-md-offset-2 col-md-8 col-xs-10">
-      <div class="well panel panel-default">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-xs-12 col-sm-3 text-center">
-                <img
-                    {% if employee.photoLink %}
-                       src="{{ employee.photoLink }}"
-                    {% else %}
-                       src="{% static 'default_avatar.png' %}"
-                    {% endif %}
-                    alt="лицо {{ employee.lastName }}" class="center-block img-circle img-thumbnail img-responsive">
-            </div>
-            <div class="col-xs-12 col-sm-8">
-                <h2>{{ employee.lastName }}
-                    {{ employee.firstName }}
-                    {{ employee.middleName }}</h2>
-                <h5><strong><a href='https://www.bsuir.by/schedule/scheduleEmployee.xhtml?id={{ employee.bsuir_id }}'>Расписание</a></strong></h5>
-                <h5><strong>Кафедра: </strong> {{ employee.academicDepartment }} </h5>
-                <h5><strong>Разведка докладывает: </strong> {{ employee.description }} </h5>
 
-            </div>
-          </div>
+<div id="header_wrap2">
+    <div id="header_wrap1">
+        <div id="header" style="display: none;">
+            <h1 id="title">false</h1>
         </div>
-      </div>
-
-    {% if employee.images.all %}
-      <div class="row pictures">
-            {% for image in employee.images.all %}
-
-          <div class="col-sm-6 col-md-3">
-              <div class="thumbnail">
-                  <div class="caption">
-                      <p class="pull-right" rel="tooltip">
-                      </p>
-                      <div class="clearfix"></div>
-                  </div>
-                  <img src="{{ image.image.url }}" alt="One second..."
-                       class="img-responsive"   data-toggle="modal" data-target="#pictureModal" />
-
-              </div>
-          </div>
-           {% endfor %}
-      </div>
-
-      <style type="text/css" media="screen">
-          .pictures .thumbnail {
-              position: relative;
-
-
-              webkit-transition: all .3s cubic-bezier(.55,.08,.06,.97);
-              transition: all .3s cubic-bezier(.55,.08,.06,.97);
-              vertical-align: middle;
-              -webkit-filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .27));
-              filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .27));
-          }
-
-          .pictures .thumbnail:hover {
-              cursor: pointer;
-              -webkit-transform: translate3d(0,-5px,0);
-              transform: translate3d(0,-5px,0);
-              -webkit-filter: drop-shadow(0 21px 16px rgba(0, 0, 0, .18));
-              filter: drop-shadow(0 21px 16px rgba(0, 0, 0, .18));
-          }
-
-          .pictures .caption {
-              bottom: calc(100% - 60px);
-              left: calc(100% - 60px);
-              position: absolute;
-          }
-
-          #pictureModal img {
-              margin-left: auto;
-              margin-right: auto;
-          }
-      </style>
-
-      <script type="text/javascript">
-       $("div.pictures div div img").click(function (event) {
-        var modal_body = $("#pictureModal div div div.modal-body");
-           modal_body.empty();
-           var picture = $(event.target).clone();
-           modal_body.append(picture);
-       });
-      </script>
-
-    {% else %}
-      <p>No images are available. </p>
-    {% endif %}
-
-      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-  +
-      </button>
-          <hr/>
-      <div class='col-xs-offset-2 col-xs-8'>
-
-        {% if employee.memes %}
-          Memes:
-          <div id='memes-cloud' style="width: 550px; height: 150px;"></div>
-
-          <script type="text/javascript">
-           $("#memes-cloud").jQCloud([
-              {% for meme in employee.memes %}
-                 {text: '{{ meme }}' },
-              {% endfor %}
-           ]);
-          </script>
-        {% else %}
-          <p>No memes :(</p>
-        {% endif %}
-          <hr/>
-        {% if employee.tags.exists %}
-          <p>Tags:
-            {% for tag in employee.tags.all %}
-              <div class='tag'>
-                  <a href="{% url 'search:tags' %}?query={{tag}}">
-                    {{ tag }}
-                  </a>
-              </div>
-            {% endfor %}
-          </p>
-          <style type="text/css" media="screen">
-              .tag {
-                  border-radius: 16px;
-                  padding: 3px 6px;
-                  font-size: 13px;
-                  line-height: 27px;
-                  display: inline-block;
-                  height: 25px;
-                  color: rgba(0,0,0,0.6);
-                  padding: 0 12px;
-                  background-color: #E4E4E4;
-              }
-          </style>
-        {% else %}
-          <p>No tags here</p>
-        {% endif %}
-
-
-
-          <p>{% ratings employee %}</p>
-          <p>
-          {% get_comment_count for employee as comment_count %}
-              <strong>{{ comment_count }} comments<strong>
-          </p>
-      {% get_comment_list for employee as comment_list %}
-          <ul class="media-list">
-          {% for comment in comment_list %}
-              <li class="media">
-                  <a href="#" class="pull-left">
-                      <img src="{% static 'default_avatar.png' %}" alt="" class="img-circle" height="65" width="65">
-                  </a>
-                  <div class="media-body">
-                      <span class="text-muted pull-right">
-                          <small class="text-muted">{{ comment.submit_date }}</small>
-                      </span>
-                      <strong class="text-success">{{ comment.user_name }}</strong>
-                      <p>
-                      {{ comment.comment }}
-                      </p>
-                  </div>
-              </li>
-          {% endfor %}
-          </ul>
-
-
-          {% if user.is_authenticated %}
-             {% get_comment_form for employee as form %}
-          <form action="{% comment_form_target %}" method="POST">
-             {% csrf_token %}
-              <textarea class="form-control" id="id_comment" maxlength="3000" name="comment" required></textarea>
-              <input type="hidden" id="id_honeypot" name="honeypot" type="text" />
-             {{ form.content_type }}
-             {{ form.object_pk }}
-             {{ form.timestamp }}
-             {{ form.security_hash }}
-              <input type="hidden" name="next" value="{% url 'employees:show' employee.id %}" />
-              <input type="submit" class='btn btn-default' value="Add comment" id="id_submit" />
-          </form>
-          {% else %}
-          <p>Please <a href="{% url 'loginsys:login' %}">log in</a> to leave a comment.</p>
-          {% endif %}
-      </div>
     </div>
+</div>
+<div id="wrap_between"></div>
+<div id="wrap3"><div id="wrap2">
+  <div id="wrap1">
+    <div id="content" class=""><div id="public" class="clear_fix ">
+
+  <div class="wide_column_left">
+  <div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+      <div class="page_block page_photo" id="">
+  <div class="owner_photo_wrap" id="owner_photo_wrap">
+
+  <div class="page_avatar_wrap">
+
+      <div id="page_avatar" class="page_avatar">
+          <img class="page_avatar_img"
+               {% if employee.photoLink %}
+               src="{{ employee.photoLink }}"
+               {% else %}
+               src="{% static 'default_avatar.png' %}"
+               {% endif %}
+               width=100%
+               alt="лицо {{ employee.lastName }}">
+      </div>
   </div>
 </div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">New info</h4>
-      </div>
-      <div class="modal-body">
+</div>
+</div><div class="page_block" id="">
+  <div class="module clear people_module _module" id="public_followers">
+  <div class="header_right_link fl_r" "=""></div>
+<a href="/search?c[section]=people&amp;c[group]=144244995" onclick="return page.showPageMembers(event, -144244995, 'members')" class="module_header">
+  <h3 class="header_top clear_fix">
+    <span class="header_label fl_l">New info</span>
+    <span class="header_count fl_l">Add</span>
+  </h3>
+</a>
+  <div class="module_body clear_fix">
 
           <form action="{% url 'employees:tags_add' employee_id=employee.id %}" method="GET">
         {% csrf_token %}
@@ -241,21 +88,169 @@
 
               <input type="submit" value="Submit" />
           </form>
+  </div>
 
-      </div>
+</div>
+</div>
+
     </div>
   </div>
+  <div class="wide_column_wrap">
+    <div class="wide_column" id="wide_column">
+      <div class="page_block" id="">
+  <div class="page_top">
+
+  <h2 class="page_name">
+                    {{ employee.firstName }}
+                    {{ employee.middleName }}
+                    {{ employee.lastName }}
+  </h2>
+  <div class="page_current_info" id="page_current_info"><div id="currinfo_editor" class="page_status_editor clear" onclick="cancelEvent(event)">
+  <div class="editor">
+    <div class="page_status_input_wrap _emoji_field_wrap">
+      <div class="emoji_smile_wrap  _emoji_wrap">
+  <div class="emoji_smile _emoji_btn" title="Use the TAB key to insert emoji faster" onmouseover="return Emoji.show(this, event);" onmouseout="return Emoji.hide(this, event);" onclick="return cancelEvent(event);">
+    <div class="emoji_smile_icon"></div>
+  </div>
 </div>
-
-
-<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="pictureModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img class="img-responsive" alt="One second...">
-        </div>
-      </div>
+      <div class="page_status_input" id="currinfo_input" contenteditable="true"></div>
     </div>
+    <div class="page_status_audio checkbox unshown" id="currinfo_audio" onclick="checkbox(this); Page.audioStatusUpdate('b1e796da204cce0bd8');" role="checkbox" aria-checked="false" tabindex="0">Broadcast names of the tracks</div>
+    <div class="page_status_app checkbox unshown" id="currinfo_app" onclick="checkbox(this); Profile.appStatusUpdate('b1e796da204cce0bd8')" role="checkbox" aria-checked="false" tabindex="0">Show the app in my status</div>
+    <button class="flat_button button_small page_status_btn_save" id="currinfo_save">Save</button>
+  </div>
+</div>
+<div id="currinfo_wrap" onclick="return Page.infoEdit();" tabindex="0" role="button">
+    <span id="current_info" class="current_info"><span class="no_current_info">
+      {{ employee.description }}
+    </span></span>
 </div>
 
+  </div>
+  </div><div id="page_info_wrap" class="page_info_wrap info"><div class="group_info_block info"><div class="group_info_rows"><div class="group_info_row info" style='margin-left:5px;margin-top:5px;' title="Biography">
+   Кафедра {{ employee.academicDepartment }}
+
+      <br />
+
+        {% if employee.memes %}
+      <div id='memes-cloud' style="width: 400px; height: 150px;"></div>
+
+      <script type="text/javascript">
+       $("#memes-cloud").jQCloud([
+           {% for meme in employee.memes %}
+           {text: '{{ meme }}' },
+           {% endfor %}
+       ]);
+      </script>
+        {% else %}
+          <p>No memes :(</p>
+        {% endif %}
+          <hr/>
+
+    {% if employee.images.all %}
+
+       {% for image in employee.images.all %}
+                  <img src="{{ image.image.url }}" alt="One second..."
+                       class="img-responsive" width=100%>
+                  {% endfor %}
+        {% endif %}
+        {% if employee.tags.exists %}
+          <p>
+            {% for tag in employee.tags.all %}
+              <div class='tag'>
+                  <a href="{% url 'search:tags' %}?query={{tag}}">
+                    {{ tag }}
+                  </a>
+              </div>
+            {% endfor %}
+          </p>
+          <style type="text/css" media="screen">
+              .tag {
+                  border-radius: 16px;
+                  padding: 3px 6px;
+                  font-size: 13px;
+                  line-height: 27px;
+                  display: inline-block;
+                  height: 25px;
+                  color: rgba(0,0,0,0.6);
+                  padding: 0 12px;
+                  background-color: #E4E4E4;
+              }
+          </style>
+        {% else %}
+          <p>No tags here</p>
+        {% endif %}
+
+          <p>{% ratings employee %}</p>
+
+
+</div></div></div></div>
+</div>
+
+          {% if user.is_authenticated %}
+             {% get_comment_form for employee as form %}
+          <form action="{% comment_form_target %}" method="POST">
+             {% csrf_token %}
+<input type="hidden" id="id_honeypot" name="honeypot" type="text" />
+             {{ form.content_type }}
+             {{ form.object_pk }}
+             {{ form.timestamp }}
+             {{ form.security_hash }}
+              <input type="hidden" name="next" value="{% url 'employees:show' employee.id %}" />
+
+<div class="page_block">
+    <div id="submit_post_box" class="submit_post_box clear_fix _submit_post_box" >
+  <div class="post_field_wrap _emoji_field_wrap">
+      <input id="true_comment_input" type="text" name=comment style="width:381px; height:19px"/>
+      <!-- <div id="post_field" class="submit_post_field dark submit_post_inited" contenteditable="true"></div> -->
+
+</div>
+  </div>
+  </div>
+</form>
+          {% endif %}
+
+<div class="wall_module" id="public_wall">
+<div class="page_block">
+    <h2 class="page_block_h2 ">
+  <ul class="ui_tabs clear_fix " id="wall_tabs" data-inited="1">
+    <li>
+  <a href="#" class="ui_tab ui_tab_sel" >
+    Comments
+  </a>
+</li>
+  </ul>
+</h2>
+  </div>
+  <div id="page_wall_posts" class="wall_posts own"><input type="hidden" id="page_wall_count_own" value="212">
+
+      {% get_comment_list for employee as comment_list %}
+          {% for comment in comment_list %}
+
+      <div class="_post post page_block all own">
+          <div class="_post_content">
+
+              <div class="post_header">
+                  <a class="post_image" href="{% url 'users:show' username=comment.user.username %}">
+                      <img src="{{ comment.user.image.image.url }}" data-post-click-type="post_owner_img" width="50" height="50" class="post_img">
+                      <span class="blind_label">.</span>
+                  </a>
+                  <div class="post_header_info">
+                      <h5 class="post_author"><a class="author" href="{% url 'users:show' username=comment.user.username %}" data-post-click-type="post_owner_link">{{ comment.user_name }}</a> </h5>
+                      <div class="post_date"><span class="rel_date">{{ comment.submit_date }}</span></div>
+
+                  </div>
+              </div>
+              <div class="post_content">
+                  <div class="post_info">
+                      <div class="wall_text"><div id="wpt-144244995_462" class="wall_post_cont _wall_post_cont"><div class="wall_post_text">
+              {{ comment.comment }}
+                      </div></div></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+
+  </div>
 {% endblock %}

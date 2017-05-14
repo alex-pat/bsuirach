@@ -98,6 +98,8 @@ def html(schedule):
         CUR_WEEK = int(requests.get(
             "https://www.bsuir.by/schedule/rest/currentWeek/date/%s" %
                  (today.strftime("%d.%m.%Y"))).text) - 1
+    if today.weekday() > 5:
+        return ''
     html = '<ul>'
     for lesson in schedule[CUR_WEEK][today.weekday()]:
         html += "<li>{lessonType}: {subject} {time} {place} ({firstName} {lastName})".format(

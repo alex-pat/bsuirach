@@ -1,77 +1,204 @@
 {% load staticfiles %}
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>BSUIRach</title>
-        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" media="screen" />
-        <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" type="text/css" media="screen" />
-        <link rel="stylesheet" href="{% static 'common.css' %}" type="text/css" media="screen" />
-        <script src="{% static 'jquery.min.js' %}"></script>
-        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    </head>
-    <body>
+<meta name="description" content="">
 
+<title>BSUIRач</title>
 
-        <nav class="navbar navbar-default navbar-fixed-top"">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">BSUIRач<sup>&#945;</sup></a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'groups:index' %}">Groups</a></li>
-                    </ul>
-                    <form class="navbar-form navbar-left"
-                          action="{% url 'search:employees' %}"
-                          method="get">
-                        <div class="form-group">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Search"
-                                   name='query'>
+<script src="{% static 'jquery.min.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'fonts_cnt.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+
+<link type="text/css" rel="stylesheet" href="{% static 'settings.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'ui_controls.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'ui_common.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'mrtarg.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'notifier.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'tooltips.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'aes_light.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'page.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'feed.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'ui_media_selector.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'stories.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'post.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'wkview.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'wk.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'search.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'profile.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'module.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" id="oldvk-style-main">
+<link rel="stylesheet" type="text/css" href="{% static 'local.css' %}" id="oldvk-style-local">
+
+<body data-useragent="chrome" style="overflow: auto;">
+    <div id="layer_bg" class="fixed" style="height: 651px; opacity: 0.8; display: none;"></div><div id="layer_wrap" class="scroll_fix_wrap fixed layer_wrap" style="width: 1366px; height: 651px; display: none;"><div id="layer" style="width: 1348px;"></div></div>
+    <div id="box_layer_bg" class="fixed" style="height: 651px;"></div><div id="box_layer_wrap" class="scroll_fix_wrap fixed" style="width: 1366px; height: 651px; display: none;"><div id="box_layer" style="width: 1348px;"><div id="box_loader" style="margin-top: 233.333px; display: none;"><div class="pr pr_baw pr_medium" id="box_loader_pr"><div class="pr_bt"></div><div class="pr_bt"></div><div class="pr_bt"></div></div><div class="back"></div></div></div></div>
+
+    <div class="scroll_fix_wrap _page_wrap" id="page_wrap"><div><div class="scroll_fix" style="width: 1348px;">
+
+        <div id="page_header_cont" class="page_header_cont">
+            <div class="back"></div>
+            <div id="page_header_wrap" class="page_header_wrap" style="width: 791px; margin-left: 0px;">
+                <a class="top_back_link" href="/" id="top_back_link"   style="max-width: 756px; display: none;"></a>
+                <div id="page_header" class="p_head p_head_l0" style="width: 960px">
+                    <div class="content">
+                        <div id="top_nav" class="head_nav">
+                            <div class="head_nav_item fl_l"><a class="top_home_link fl_l " href="/" aria-label="На главную" accesskey="1">
+                                <div class="top_home_logo" style="background: url('{% static 'logo.gif' %}');"></div></a></div>
+                            <div class="head_nav_item fl_l"><div id="ts_wrap" class="ts_wrap">
+                                <form class="navbar-form navbar-left"
+                                      action="{% url 'search:employees' %}"
+                                      method="get">
+                                    <div class="input_back_wrap no_select">
+                                        <div class="input_back" style="margin: 9px 0px; padding: 6px 6px 6px 21px;">
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text ts_input" id="ts_input" autocomplete="off" name="query" aria-label="Поиск" placeholder="Поиск">
+                                </form>
+                            </div>
+                            </div>
+
+                            <div id="oldvk_top_menu">
+                                {% if username %}
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_exit"
+                                       class="top_nav_link"
+                                       href="{% url 'loginsys:logout' %}">
+                                        <div class="top_profile_name">выйти
+                                        </div>
+                                    </a>
+                                </div>
+                                {% else %}
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_exit"
+                                       class="top_nav_link"
+                                       href="{% url 'loginsys:register' %}">
+                                        <div class="top_profile_name">регистрация
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_exit"
+                                       class="top_nav_link"
+                                       href="{% url 'loginsys:login' %}">
+                                        <div class="top_profile_name">войти
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <!-- <div class="head_nav_item fl_r">
+                                     <a id="oldvk_top_help" class="top_nav_link" href="LINK!!!" >
+                                     <div class="top_profile_name">помощь
+                                     </div>
+                                     </a>
+                                     </div> -->
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_communities"
+                                       class="top_nav_link"
+                                       href="{% url 'groups:index' %}" >
+                                        <div class="top_profile_name">группы
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_peoples" class="top_nav_link" href="ССЫЛКА" >
+                                        <div class="top_profile_name">люди
+                                        </div>
+                                    </a>
+                                </div>
+                                {% if username %}
+                                <div class="head_nav_item fl_r">
+                                    <a id="oldvk_top_exit"
+                                       class="top_nav_link"
+                                       href="{% url 'users:show' username=username %}">
+                                        <div class="top_profile_name">{{ username }}
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
-                    </form>
+                        <div id="ts_cont_wrap" class="ts_cont_wrap">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <ul class="nav navbar-nav navbar-right">
-                       {% if username %}
-                        <li>
-                            <a href="{% url 'users:show' username=username %}">
-                               {{ username }}
+        <div id="page_layout" style="width: 960px;">
+            <div id="side_bar" class="fl_l " style="">
+                <div id="side_bar_inner" class="side_bar_inner" style="position: relative; margin-top: 40px;">
+                    <ol>
+                        <li id="l_nwsf" class=""><a href="LINK!!!"  class="left_row">
+                            <span class="left_fixer">
+                                <span class="left_count_wrap fl_r left_void"><span class="inl_bl left_count_sign">0</span></span>
+                                <span class="left_icon fl_l"></span>
+                                <span class="left_label inl_bl">Новости</span>
+                            </span>
+                        </a>
+                        <div class="left_settings" >
+                            <div class="left_settings_inner"></div>
+                        </div>
+                        </li>
+                        <li id="l_msg" class=""><a href="CCЫЛКА" class="left_row">
+                            <span class="left_fixer">
+                                <span class="left_count_wrap fl_r left_void" style="opacity: 1; display: block;"><span class="inl_bl left_count_sign"></span></span>
+                                <span class="left_icon fl_l"></span>
+                                <span class="left_label inl_bl">Сообщения</span>
+                            </span>
+                        </a>
+                        <div class="left_settings" >
+                            <div class="left_settings_inner"></div>
+                        </div>
+                        </li>
+
+                        {% if username %}
+                        <li id="l_fr" class="">
+                            <a href="{% url 'users:show' username=username %}"  class="left_row">
+                                <span class="left_fixer">
+                                    <span class="left_label inl_bl">Моя страница</span>
+                                </span>
+                            </a>
+
+                        </li>
+                        {% endif %}
+                        <li id="l_gr" class=""><a href="{% url 'groups:index' %}"  class="left_row">
+                            <span class="left_fixer">
+                                <span class="left_label inl_bl">Группы</span>
+                            </span>
+                        </a>
+                        </li>
+
+                        <li id="l_ph" class=""><a href="LINK!!!"  class="left_row">
+                            <span class="left_fixer">
+                                <span class="left_label inl_bl">Фотографии</span>
+                            </span>
+                        </a>
+                        </li>
+                        {% if username %}
+                        <li id="l_sett">
+                            <a href="{% url 'users:edit' username=username %}" class="left_row">
+                                <span class="left_fixer">
+                                    <span class="left_label inl_bl" id="oldvk-settings">Настройки</span>
+                                </span>
                             </a>
                         </li>
-                        <li class="divider"></li>
-                        <li><a href="/auth/logout/">Logout</a></li>
-                       {% else %}
-                        <li><a href="/auth/login/">Login</a></li>
-                        <li><a href="/auth/register/">Sign up</a></li>
-                       {% endif %}
-
-                    </ul>
-                    </ul>
+                        {% endif %}
+                    </ol>
                 </div>
             </div>
-        </nav>
 
-        <div id="wrap">
-            <div class="container">
-            {% block body %}{% endblock %}
+            <div id="page_body" class="fl_r " style="width: 795px;">
+                {% block body %}{% endblock %}
+
             </div>
-            <div id="push"></div>
+            <div id="footer_wrap" class="footer_wrap fl_r" style="width: 795px;"><div class="left_menu_nav_wrap">
+                <a class="left_menu_nav" href="https://github.com/alex-pat/bsuirach">6TPO, 2017</a>
+            </div></div>
+            <div class="clear"></div>
         </div>
+    </div></div></div>
+    <div class="progress" id="global_prg"></div>
 
-        <div class="container">
-            <p class="muted credit" style='text-align:center'>
-                <a href="http://github.com/alex-pat/bsuirach">
-                    6TPO (The Specks), 2017. Fork Us on github
-                </a>
-            </p>
-        </div>
-
-    </body>
+</body>
 </html>

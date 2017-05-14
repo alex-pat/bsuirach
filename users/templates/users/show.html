@@ -2,225 +2,163 @@
 {% load static %}
 
 {% block body %}
+     <div id="header_wrap2">
+        <div id="header_wrap1">
+          <div id="header" style="display: block;">
+              <h1 id="title">
+{{ user.first_name }}
+{{ user.username }}
+{{ user.last_name }} </h1>
+          </div>
+        </div>
+      </div>
+      <div id="wrap_between"></div>
+      <div id="wrap3"><div id="wrap2">
+  <div id="wrap1">
+    <div id="content" class=""><div id="profile" class="profile_content">
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div class="panel panel-white profile-widget">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="image-container bg2" style='background-image:url("{% static 'wallpaper.jpeg' %}")'>
-                            <img
-                                {% if has_avatar %}
-                                src="{{ user.image.image.url }}"
-                                {% else %}
-                                src="{% static 'default_avatar.png' %}"
-                                {% endif %}
-                                class="avatar" alt="avatar">
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="details">
-                            <h4>{{ user.first_name }} {{ user.last_name }}<i class="fa fa-sheild"></i></h4>
-                            <div>{{ user.username }}</div>
-                            <div>{{ user.email }}</div>
+  <div class="wide_column_right">
+  <div class="narrow_column_wrap">
+    <div class="narrow_column" id="narrow_column">
+      <div class="page_block page_photo" id="">
+  <div class="owner_photo_wrap actions_with_effects" id="owner_photo_wrap">
+  <div class="page_avatar_wrap no_stickers_1april">
+
+  <div id="page_avatar" class="page_avatar"><a id="profile_photo_link" href="{{ user.image.image.url }}" ><img class="page_avatar_img" src="{{ user.image.image.url }}" width="200" height="200"></a></div>
+</div>
+</div><div class="profile_actions">
+  <div class="page_actions_wide clear_fix no_actions edit">
+  <div class="page_action_left fl_l">
+    <a id="profile_edit_act" href="{% url 'users:edit' username=user.username %}" class="flat_button button_wide secondary">Редактировать</a>
+  </div>
+
+</div>
+</div>
+</div>
+    <div class="page_block" id="">
+                  {% if request.user.is_superuser %}
+  <div class="module clear people_module _module" id="profile_friends">
+  <a href="#" class="header_right_link fl_r"  "=""></a>
+<a href="#"  class="module_header">
+  <h3 class="header_top clear_fix">
+    <span class="header_label fl_l">Admin tools</span>
+    <span class="header_count fl_l"></span>
+  </h3>
+</a>
+  <div class="module_body clear_fix">
+<div class="body-section">
+    <a id="employee-updater" class="btn btn-success has-spinner">
+        <span class="text">
+                                        Update employees
+        </span>
+        <span class="spinner">
+            <i class="fa fa-refresh fa-spin fa-fw"></i>
+        </span>
+    </a>
+</div>
+<div class="body-section">
+    <a id="groups-updater" class="btn btn-success has-spinner">
+        <span class="text">
+                                        Update groups
+        </span>
+        <span class="spinner">
+            <i class="fa fa-refresh fa-spin fa-fw"></i>
+        </span>
+    </a>
+</div>
+
+  </div>
+
+
+</div>                  {% endif %}
+
+</div></div>
+  </div>
+  <div class="wide_column_wrap">
+    <div class="wide_column" id="wide_column">
+      <div class="page_block" id="">
+  <div id="page_info_wrap" class="page_info_wrap "><div class="page_top">
+  <h4 class="profile_online"><div id="profile_online_lv">Online<b class="mob_onl profile_mob_onl unshown" id="profile_mobile_online" ></b></div> </h4>
+  <h2 class="page_name">{{ user.first_name }}
+{{ user.last_name }} </h2>
+  <div class="page_current_info" id="page_current_info"><div id="currinfo_editor" class="page_status_editor clear" >
+
+</div>
+<div id="currinfo_wrap" tabindex="0" role="button">
+  <span id="current_info" class="current_info"><span class="my_current_info"><span class="current_text">{{ user.username }}</span></span></span>
+</div>
+<div id="currinfo_fake" style="display: none"><span class="my_current_info"><span class="current_text">псевдо-контекст</span></span></div></div>
+     </div><div class="profile_info profile_info_short" id="profile_short">
+  <div class="clear_fix profile_info_row ">
+  <div class="label fl_l">Группа:</div>
+
                             {% for group in user.group_set.all %}
-                            <div>
-                                <a href="{% url 'groups:show' number=group.number %}">
- {{ group.number }}
+  <div class="labeled"><a href="{% url 'groups:show' number=group.number %}">{{group.number}}
+</a></div>
+{% endfor %}
+</div>
+<div class="clear_fix profile_info_row ">
+  <div class="label fl_l">Почта:</div>
+  <div class="labeled"><a href="#" target="_blank">{{ user.email }}</a></div>
+</div>
+</div>
+</div>
 
-                                </a>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+</div>
+    <div class="page_block" id="">
+  <div class="module clear photos_module empty _module" id="profile_photos_module">
+  <div class="header_right_link fl_r" "=""></div>
 
-                </div>
-            </div>
+</div>
+</div>  <div class="page_block">
 
-            <div class="row">
+  </div>
+<div class="wall_module" id="profile_wall">
+  <div class="page_block">
+    <h2 class="page_block_h2 ">
+  <ul class="ui_tabs clear_fix " id="wall_tabs">
+    <li>
+  <a href="#" class="ui_tab ui_tab_sel" >
+      Расписание
+  </a>
+    </li>
 
-                <div class="col-sm-6">
+    <div class="ui_tabs_slider _ui_tabs_slider"></div>
+  </ul>
+</h2>
+  </div><div id="submit_post_box" class="submit_post_box clear_fix _submit_post_box" >
+  <div class="post_field_wrap _emoji_field_wrap">
+    <div id="post_field" class="submit_post_field dark submit_post_inited"   contenteditable="true"></div>
+  <div class="placeholder"><div class="ph_input"><div class="ph_content">450501</div></div></div></div>
 
-                    <div class="panel panel-white border-top-purple">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">My Story</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <h5 class="section-heading">About</h5>
-                                <p class="section-content">A brief description of you</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Introduction</h5>
-                                <p class="section-content">Put a little about yourself here so people know they've found the correct Kevin.</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Acheivements</h5>
-                                <p class="section-content">Examples: survived high school, have 3 kids, etc.</p>
-                            </div>
-                        </div>
-                    </div>
+</div>
+<div id="page_wall_posts" class="wall_posts all"><input type="hidden" id="page_wall_count_all" value="3"><input type="hidden" id="page_wall_count_own" value="3">
 
-                    <div class="panel panel-white border-top-light-blue">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">My Schedule</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <h5 class="section-heading">Today:</h5>
-                                {% autoescape off %}
+
+<div id="post52875010_1922" class="_post post page_block all own" data-post-id="52875010_1922" >
+  <div class="_post_content">
+{% autoescape off %}
                                 {{ schedule }}
                                 {% endautoescape %}
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="panel panel-white border-top-pink">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">My Tasks</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <h5 class="mg-top-0">Completed Pre-Orders - 90%</h5>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-                                </div>
-                            </div>
-                            <div class="body-section">
-                                <h5>Completed Orders - 40%</h5>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  </div>
 
-                </div>
-
-                <div class="col-sm-6">
-
-                    <div class="panel panel-white border-top-green">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">User Info</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <h5 class="section-heading">Username</h5>
-                                <p class="section-content"> {{ user.username }}</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">First name</h5>
-                                <p class="section-content">{{ user.first_name }}</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Last name</h5>
-                                <p class="section-content">{{ user.last_name }}</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Email</h5>
-                                <p class="section-content">{{ user.email }}</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Date joined</h5>
-                                <p class="section-content">{{ user.date_joined.isoformat }}</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Last login</h5>
-                                <p class="section-content">{{ user.last_login.isoformat }}</p>
-                            </div>
-                            <div class="body-section">
-                                <a href='/users/{{ user.username }}/edit' class='btn btn-default'>Edit</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-white border-top-orange">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Social Statistics</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <h5 class="section-heading">Friends</h5>
-                                <p class="section-content">242</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Posts</h5>
-                                <p class="section-content">2240</p>
-                            </div>
-                            <div class="body-section">
-                                <h5 class="section-heading">Pictures</h5>
-                                <p class="section-content">18</p>
-                            </div>
-                        </div>
-                    </div>
-
-                  {% if request.user.is_superuser %}
-                    <div class="panel panel-white border-top-black">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Admin tools</h3>
-                            <div class="controls pull-right">
-                                <span class="pull-right clickable">
-                                    <i class="fa fa-chevron-up"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="body-section">
-                                <a id="employee-updater" class="btn btn-success has-spinner">
-                                    <span class="text">
-                                        Update employees
-                                    </span>
-                                    <span class="spinner">
-                                        <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="body-section">
-                                <a id="groups-updater" class="btn btn-success has-spinner">
-                                    <span class="text">
-                                        Update groups
-                                    </span>
-                                    <span class="spinner">
-                                        <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                  {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+</div>
+
+</div></div>
+  </div>
+</div>
+</div></div>
+  </div>
+</div></div>
+    </div>
+
+
+
+
+
+
 <script type="text/javascript">
  function set_updater(name, url) {
      var updater = "#" + name + "-updater"
